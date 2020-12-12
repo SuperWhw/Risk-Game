@@ -1,5 +1,10 @@
+package hello;
+
 public class Test {
+
     public static void main(String[] args) {
-        System.out.println("test file");
+        // TODO Auto-generated method stub
+        System.out.println("http://www.cnblogs.com/adamjwh/");
     }
+
 }
