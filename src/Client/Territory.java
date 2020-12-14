@@ -2,14 +2,18 @@ package Client;
 
 import Client.Player;
 
+import java.util.HashSet;
+
 public class Territory {
-    private String territoryName;
+    private final String territoryName;
     private Player territoryOwner;
+    private final HashSet<Territory> neighbors;
     private int territoryUnits;
 
-    public Territory(String name, Player owner, int units) {
+    public Territory(String name, Player owner, HashSet<Territory> neighbors, int units) {
         this.territoryName = name;
         this.territoryOwner = owner;
+        this.neighbors = neighbors;
         this.territoryUnits = units;
     }
 
@@ -19,6 +23,10 @@ public class Territory {
 
     public Player getOwner() {
         return territoryOwner;
+    }
+
+    public HashSet<Territory> getNeighbors() {
+        return neighbors;
     }
 
     public int getUnits() {
