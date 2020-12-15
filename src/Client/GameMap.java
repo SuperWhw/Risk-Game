@@ -1,16 +1,26 @@
 package Client;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class GameMap {
     private HashSet<Territory> territorySet;
-    private final int initUnits;
+    private int initUnits;
 
-    public GameMap(HashSet<Territory> tS, int initUnits) {
-        this.territorySet = tS;
+    public GameMap() {
+        this.territorySet = new HashSet<>();
+    }
+
+
+    // maybe not need
+    public HashSet<Territory> getTerritorySet() {
+        return territorySet;
+    }
+
+    public void buildMap(Territory[] territoryList) {
+        for(Territory t: territoryList) territorySet.add(t);
+    }
+
+    public void setInitUnits(int initUnits) {
         this.initUnits = initUnits;
     }
 
