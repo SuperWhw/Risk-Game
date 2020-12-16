@@ -8,18 +8,17 @@ class AttackOrder extends OrderBasic {
         super(p, orderType, fromT, toT, units);
     }
 
-    private int getRandom(int from, int to) {
+    private int rollDice(int from, int to) {
         Random rand = new Random();
         return rand.nextInt((to - from) + 1) + from;
     }
 
     @Override
     public void execute() {
-
         int att_units = units, def_units = toT.getUnits();
         while(att_units > 0 && def_units > 0) {
-//            int attNum = getRandom(1, 20);
-//            int defNum = getRandom(1, 20);
+//            int attNum = rollDice(1, 20);
+//            int defNum = rollDice(1, 20);
 //            if (attNum > defNum) def_units--;
 //            else att_units--;
 
@@ -40,7 +39,7 @@ class AttackOrder extends OrderBasic {
         }
         if(att_units > 0) {
             toT.setUnits(att_units);
-            toT.setOwner(fromT.getOwner());
+            toT.setOwner(getPlayer());
         }
         else {
             toT.setUnits(def_units);

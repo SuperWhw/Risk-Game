@@ -8,7 +8,7 @@ class MoveOrder extends OrderBasic {
 
     @Override
     public void execute() {
-        toT.addUnits(units);
-        fromT.removeUnits(units);
+        if(toT != null) toT.addUnits(units);
+        if(fromT != null) fromT.removeUnits(units);
     }
 }

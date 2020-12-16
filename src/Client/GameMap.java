@@ -17,7 +17,7 @@ public class GameMap {
     }
 
     public void buildMap(Territory[] territoryList) {
-        for(Territory t: territoryList) territorySet.add(t);
+        Collections.addAll(territorySet, territoryList);
     }
 
     public void setInitUnits(int initUnits) {

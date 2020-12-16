@@ -1,6 +1,8 @@
 package Client;
 
 import java.lang.annotation.ElementType;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class TestModel {
@@ -83,10 +85,9 @@ public class TestModel {
         AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Hogwarts, 4);
 
         // take action
-        m1.execute();
-        m2.execute();
-        a1.execute();
-        a2.execute();
+        ArrayList<OrderBasic> orderList = new ArrayList<>(Arrays.asList(m1,m2,a1,a2));
+        OrderHandler orders = new OrderHandler(map);
+        map = orders.execute(orderList);
 
         // print current state
         for(Territory t: map.getTerritorySet()) {
