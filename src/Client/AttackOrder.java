@@ -2,16 +2,10 @@ package Client;
 
 import java.util.Random;
 
-class AttackOrder extends Order{
-    private Territory fromT;
-    private Territory toT;
-    private int units;
+class AttackOrder extends OrderBasic {
 
     public AttackOrder(Player p, String orderType, Territory fromT, Territory toT, int units) {
-        super(p, orderType);
-        this.fromT = fromT;
-        this.toT = toT;
-        this.units = units;
+        super(p, orderType, fromT, toT, units);
     }
 
     private int getRandom(int from, int to) {
@@ -21,8 +15,6 @@ class AttackOrder extends Order{
 
     @Override
     public void execute() {
-        // Attackers should leave out of their owner Territory first.
-        fromT.removeUnits(units);
 
         int att_units = units, def_units = toT.getUnits();
         while(att_units > 0 && def_units > 0) {
@@ -44,6 +36,7 @@ class AttackOrder extends Order{
                 def_units = 1;
                 att_units = 0;
             }
+            //
         }
         if(att_units > 0) {
             toT.setUnits(att_units);

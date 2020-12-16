@@ -1,15 +1,9 @@
 package Client;
 
-class MoveOrder extends Order{
-    private Territory fromT;
-    private Territory toT;
-    private int units;
+class MoveOrder extends OrderBasic {
 
     public MoveOrder(Player p, String orderType, Territory fromT, Territory toT, int units) {
-        super(p, orderType);
-        this.fromT = fromT;
-        this.toT = toT;
-        this.units = units;
+        super(p, orderType, fromT, toT, units);
     }
 
     @Override
