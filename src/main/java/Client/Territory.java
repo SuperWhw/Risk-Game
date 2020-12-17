@@ -63,6 +63,9 @@ public class Territory {
 
     public void addUnits(int n) {
         try{
+            if(n < 0) {
+                throw new IllegalArgumentException();
+            }
             setUnits(getUnits() + n);
         }
         catch (IllegalArgumentException e) {
@@ -75,10 +78,13 @@ public class Territory {
 
     public void removeUnits(int n) {
         try{
+            if(n < 0) {
+                throw new IllegalArgumentException();
+            }
             setUnits(getUnits() - n);
         }
         catch (IllegalArgumentException e) {
-            System.out.println("Illegal Argument: Please input valid units!");
+            System.out.printf("Territory %s doesn't have enough units!\n", getName());
         }
         catch (Exception e) {
             System.out.println("Unknown Error!");

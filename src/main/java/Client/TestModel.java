@@ -78,19 +78,22 @@ public class TestModel {
         map.buildMap(new Territory[]{Narnia,Midkemia,Oz,Elantris,Scadrial,Roshar,Gondor,Mordor,Hogwarts});
 
         // create action
-        MoveOrder m1 = new MoveOrder(p1, "move", Narnia, Oz, 3);
-        MoveOrder m2 = new MoveOrder(p3, "move", Mordor, Hogwarts, 6);
-        AttackOrder a1 = new AttackOrder(p1, "attack", Midkemia, Scadrial, 10);
-        AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Hogwarts, 4);
+        MoveOrder m1 = new MoveOrder(p1, "move", Narnia, Oz, 0);
+        MoveOrder m2 = new MoveOrder(p3, "move", Mordor, Hogwarts, 0);
+        MoveOrder m3 = new MoveOrder(p1, "move", Narnia, Elantris, 2);
+        AttackOrder a1 = new AttackOrder(p1, "attack", Midkemia, Scadrial, 3);
+        AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Midkemia, 1);
+        AttackOrder a3 = new AttackOrder(p3, "attack", Mordor, Scadrial, 3);
 
-        ArrayList<OrderBasic> orderList = new ArrayList<>(Arrays.asList(m1,m2,a1,a2));
+        ArrayList<OrderBasic> orderList = new ArrayList<>(Arrays.asList(m1,m2,m3,a1,a2,a3));
 
         // check order
         CheckHelper checker = new CheckHelper();
+        System.out.print("order check: ");
         for(var order: orderList) {
-            System.out.print(checker.checkOrderBasic(order)+" ");
-            System.out.println();
+            System.out.println(checker.checkOrderBasic(order));
         }
+        System.out.println();
 
         // take action
 
