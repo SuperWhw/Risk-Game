@@ -2,7 +2,7 @@ package Client;
 
 import java.util.Random;
 
-class AttackOrder extends OrderBasic {
+public class AttackOrder extends OrderBasic {
 
     public AttackOrder(Player p, String orderType, Territory fromT, Territory toT, int units) {
         super(p, orderType, fromT, toT, units);

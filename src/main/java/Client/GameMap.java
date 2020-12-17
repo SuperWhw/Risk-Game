@@ -24,6 +24,8 @@ public class GameMap {
         this.initUnits = initUnits;
     }
 
+    public int getInitUnits() { return this.initUnits; }
+
     public boolean checkReachable(Territory a, Territory b) {
         String p_name = a.getOwner().getName();
         if(!p_name.equals(b.getOwner().getName())) return false;
