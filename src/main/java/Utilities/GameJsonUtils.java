@@ -103,6 +103,9 @@ public class GameJsonUtils {
         this.str = gson.toJson(this.toObject(territories,false));
     }
 
+    public String getString() {
+        return this.str;
+    }
     public static void main(String[] args) {
         GameJsonUtils gju = new GameJsonUtils();
 
@@ -190,11 +193,14 @@ public class GameJsonUtils {
         //print gameMap
         gju.toString(map);
         gju.print();
+        String gameMap = gju.getString();
 
         //print territories
         gju.toString(map.getTerritorySet());
         gju.print();
 
-
+        FileIOBasics fiob = new FileIOBasics();
+        //fiob.writeFile("map.json",gameMap);
+        System.out.println(fiob.readJsonFile("a.json"));
     }
 }
