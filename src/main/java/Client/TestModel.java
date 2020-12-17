@@ -83,8 +83,17 @@ public class TestModel {
         AttackOrder a1 = new AttackOrder(p1, "attack", Midkemia, Scadrial, 10);
         AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Hogwarts, 4);
 
-        // take action
         ArrayList<OrderBasic> orderList = new ArrayList<>(Arrays.asList(m1,m2,a1,a2));
+
+        // check order
+        CheckHelper checker = new CheckHelper();
+        for(var order: orderList) {
+            System.out.print(checker.checkOrderBasic(order)+" ");
+            System.out.println();
+        }
+
+        // take action
+
         OrderHandler orders = new OrderHandler(map);
         map = orders.execute(orderList);
 

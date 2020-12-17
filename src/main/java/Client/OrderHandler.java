@@ -13,9 +13,12 @@ public class OrderHandler {
 
         ArrayList<MoveOrder> moveList = new ArrayList<>();
         ArrayList<AttackOrder> attackList = new ArrayList<>();
+        CheckHelper checker = new CheckHelper();
 
         // group orders
         for(var order: orderList) {
+            if(!checker.checkOrderBasic(order)) continue;
+
             if(order.getOrderType().equals("move")) {
                 moveList.add((MoveOrder) order);
             }
