@@ -7,16 +7,27 @@ import java.util.Queue;
 public class CheckHelper {
 
     public boolean checkOrderBasic(OrderBasic order) {
-        if(order.getOrderType() == "move") {
-            return checkReachable(order.getFromT(), order.getToT());
-        }
-        else if(order.getOrderType() == "attack") {
-            return checkAttackable(order.getFromT(), order.getToT());
-        }
-        else {
-            System.out.println("Invalid order type!");
+        if(!order.getPlayer().getName().equals(order.getFromT().getOwner().getName())) {
+            System.out.printf("%s does't belong to you!\n", order.getFromT().getName());
             return false;
         }
+        if(order.getOrderType().equals("move")) {
+            if(!checkReachable(order.getFromT(), order.getToT())) {
+                System.out.printf("%s cannot move to %s!\n", order.getFromT().getName(), order.getToT().getName());
+                return false;
+            }
+        }
+        else if(order.getOrderType().equals("attack")) {
+            if(!checkAttackable(order.getFromT(), order.getToT())) {
+                System.out.printf("%s cannot reach %s!\n", order.getFromT().getName(), order.getToT().getName());
+                return false;
+            }
+        }
+        else {
+            System.out.println("Invalid order type! (Should be \"move\" or \"attack\")");
+            return false;
+        }
+        return true;
     }
 
     public boolean checkReachable(Territory a, Territory b) {
