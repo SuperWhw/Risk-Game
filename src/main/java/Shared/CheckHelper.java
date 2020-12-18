@@ -1,4 +1,4 @@
-package Server;
+package Shared;
 
 import java.util.HashSet;
 import java.util.LinkedList;

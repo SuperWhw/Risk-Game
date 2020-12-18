@@ -1,4 +1,4 @@
-package Server;
+package Shared;
 
 public abstract class OrderBasic extends Order {
     protected Player player;

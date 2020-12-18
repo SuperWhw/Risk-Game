@@ -1,9 +1,6 @@
 package Server;
 
-import Client.GameMap;
-import Client.Order;
-import Client.Player;
-import Client.Territory;
+import Shared.*;
 
 import java.io.*;
 import java.net.ServerSocket;

@@ -1,4 +1,4 @@
-package Client;
+package Shared;
 
 public class MoveOrder extends OrderBasic {
 

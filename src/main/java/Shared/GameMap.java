@@ -1,4 +1,4 @@
-package Server;
+package Shared;
 
 import java.util.ArrayList;
 import java.util.Collections;
