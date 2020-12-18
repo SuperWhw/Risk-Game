@@ -1,4 +1,6 @@
 package Client;
+
+import Shared.*;
 import java.net.*;
 
 public class BasicUDPClient {

@@ -1,4 +1,4 @@
-package Client;
+package Shared;
 
 import java.util.Random;
 

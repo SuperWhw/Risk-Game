@@ -1,8 +1,10 @@
 package Client;
 
+import Shared.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+
 
 public class TestModel {
     public static void main(String[] args) {

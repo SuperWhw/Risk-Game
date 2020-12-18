@@ -1,6 +1,9 @@
-package Client;
+package Shared;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class GameMap {
     private HashSet<Territory> territorySet;
@@ -8,7 +11,7 @@ public class GameMap {
     private HashMap<String, Territory> territoryMap;
     public GameMap() {
         this.territorySet = new HashSet<>();
-        this.territoryMap = new HashMap<String,Territory>();
+        this.territoryMap = new HashMap<String, Territory>();
         this.initUnits = 0;
     }
 

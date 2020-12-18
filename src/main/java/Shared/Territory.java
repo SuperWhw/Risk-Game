@@ -1,6 +1,4 @@
-package Client;
-
-import Client.Player;
+package Shared;
 
 import java.util.HashSet;
 

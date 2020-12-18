@@ -1,6 +1,8 @@
-package Client;
+package Shared;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class OrderHandler {
     GameMap map;
