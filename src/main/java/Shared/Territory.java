@@ -4,23 +4,27 @@ import java.util.HashSet;
 
 public class Territory {
     private final String territoryName;
+    private final String aliasName;
     private HashSet<Territory> neighbors;
     private int territoryUnits;
     private Player territoryOwner;
 
-    public Territory(String name) {
+    public Territory(String name, String aliasName) {
         this.territoryName = name;
+        this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
     }
 
-    public Territory(String name, Player owner) {
+    public Territory(String name, String aliasName, Player owner) {
         this.territoryName = name;
+        this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
         this.territoryOwner = owner;
     }
 
-    public Territory(String name, int units, Player owner) {
+    public Territory(String name, String aliasName, int units, Player owner) {
         this.territoryName = name;
+        this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
         this.territoryUnits = units;
         this.territoryOwner = owner;
@@ -41,6 +45,8 @@ public class Territory {
     public int getUnits() {
         return territoryUnits;
     }
+
+    public String getAliasName() { return this.aliasName; }
 
     public void setNeighbors(HashSet<Territory> neighbors) {
         this.neighbors = neighbors;

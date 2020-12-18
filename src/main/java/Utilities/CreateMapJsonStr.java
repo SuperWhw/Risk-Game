@@ -13,15 +13,15 @@ public class CreateMapJsonStr {
         Player p3 = new Player("p3");
 
         // create territories
-        Territory Narnia = new Territory("Narnia", 10, p1);
-        Territory Midkemia = new Territory("Midkemia", 12, p1);
-        Territory Oz = new Territory("Oz", 8, p1);
-        Territory Elantris = new Territory("Elantris", 6, p2);
-        Territory Scadrial = new Territory("Scadrial", 5, p2);
-        Territory Roshar = new Territory("Roshar", 3, p2);
-        Territory Gondor = new Territory("Gondor", 13, p3);
-        Territory Mordor = new Territory("Mordor", 14, p3);
-        Territory Hogwarts = new Territory("Hogwarts", 3, p3);
+        Territory Narnia = new Territory("Narnia", "N",10, p1);
+        Territory Midkemia = new Territory("Midkemia", "Mi",12, p1);
+        Territory Oz = new Territory("Oz", "O", 8, p1);
+        Territory Elantris = new Territory("Elantris", "E",6, p2);
+        Territory Scadrial = new Territory("Scadrial", "S",5, p2);
+        Territory Roshar = new Territory("Roshar", "R",3, p2);
+        Territory Gondor = new Territory("Gondor", "G",13, p3);
+        Territory Mordor = new Territory("Mordor", "Mo",14, p3);
+        Territory Hogwarts = new Territory("Hogwarts", "H",3, p3);
 
         // set neighbors
         Narnia.setNeighbors(new HashSet<>() {{
@@ -122,6 +122,8 @@ public class CreateMapJsonStr {
         territoryGroup.add(t3);
 
         GameJsonUtils gjU = new GameJsonUtils();
-        gjU.writeMapToJson(map, territoryGroup);
+        String mapJson = gjU.writeMapToJson(map, territoryGroup);
+        FileIOBasics fileIO = new FileIOBasics();
+        fileIO.writeFile("map.json", mapJson);
     }
 }

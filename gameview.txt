@@ -18,9 +18,10 @@ Amanda
 00000000000000000000
 ------Connected-----
 00000000000000000000
+
 Here is the game menu:
-(W)ideRift
-(G)lumbia
+(W)ideRift (3 players)
+(G)lumbia (5 players)
 (E)nd
 
 >>> client:
@@ -37,7 +38,8 @@ W
 
 <<< server:
 
-Matching Game... (we couldadd a clock maybe)
+Matching Game... (we could add a clock ticking maybe)
+
 Matching successfully!/Matching failed!
 
 <<< server:
@@ -81,7 +83,7 @@ Please type value (1 - 18) to give Marnia:
 
 <<< server:
 
-Set Marnia : 5 Digits
+Set Marnia : 5 units
 Please type value(1 - 14) to give Midkemia:
 
 >>> client:
@@ -98,8 +100,8 @@ units out of range, please type it again:
 
 <<< server:
 
-Set Midkemia: 3
-Oz automatically set to 12
+Set Midkemia: 3 units
+Oz automatically set to 12 units
 
 Amanda player: (You)
 -------------
@@ -223,11 +225,11 @@ Hi Amanda, what would you like to do?
 (A)ttack
 (D)one
 
-<<< client
+>>> client:
 
-m (lowercase is permittable)
+a (lowercase is permittable)
 
->>> server
+<<< server:
 
 Which one to attack from?
 (A) Narnia (2)
@@ -235,11 +237,11 @@ Which one to attack from?
 (C) Oz (12)
 (R) Return
 
-<<< client
+>>> client:
 
 C
 
->>> server
+<<< server:
 
 which one to attack to?
 (A) Scadrial (5)
@@ -247,21 +249,21 @@ which one to attack to?
 (C) Gondor (6, Red)
 (R) Return
 
-<<< client
+>>> client:
 
 A
 
->>> server
+<<< server:
 
 Attack: Oz (12) -> Scadrial (5, Blue)
 
 How many units? (1-11)
 
-<<< client
+>>> client:
 
 0
 
->>> server
+<<< server:
 
 Units out of Range, please input again
 ---------------
@@ -274,7 +276,7 @@ How many units? (1-11)
 
 6
 
->>> server 
+<<< server: 
 
 Attack: Oz (12) -> Scadrial (5, Blue) 6 units
 Result:
@@ -286,11 +288,11 @@ Do you want to confirm?
 (D)one
 (R)eturn
 
-<<< client
+>>> client:
 
 D
 
->>> server
+<<< server:
 
 Amanda player: (You)
 -------------
@@ -318,11 +320,11 @@ Hi Amanda, what would you like to do?
 (H)elp
 (D)one
 
-<<< client
+>>> client:
 
 C
 
->>> server
+<<< server:
 
 your confirmed orders:
 (A) Move: (A) Narnia (5) -> (B) Midkemia(3) 3 Units
@@ -331,11 +333,11 @@ your confirmed orders:
 
 you can modefiy order by its charactor, or just continue (D):
 
-<<< client
+>>> client:
 
 a
 
->>> server
+<<< server:
 
 Move: (A) Narnia (5) -> (B) Midkemia(3) 3 Units
 
@@ -344,7 +346,7 @@ How do you want to modefy it?
 (A) Cancel
 (B) Done
 
-<<< client
+>>> client:
 
 A
 
@@ -378,7 +380,7 @@ Hi Amanda, what would you like to do?
 
 H
 
-<<< client
+>>> client:
 
 (M)ove: move units from Territory A to Territory B, you can only move between your territories.
 
@@ -420,7 +422,7 @@ Red player:
 7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
 7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
 
->>> server
+<<< server:
 
 Hi Amanda, what would you like to do?
 (M)ove
@@ -432,18 +434,18 @@ Hi Amanda, what would you like to do?
 
 (After showing the map, we continue ask question right before showing)
 
-<<< client
+>>> client:
 
 D
 
->>> Server
+<<< server:
 
 Your orders confirmed.
 
 Waiting for other players to confirm...
 
 
->>> Server
+<<< server:
 
 Here is the round 2:
 
@@ -465,7 +467,7 @@ Red player:
 8 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
 9 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
 
->>> server
+<<< server:
 
 Hi Amanda, what would you like to do?
 (M)ove
@@ -476,7 +478,7 @@ Hi Amanda, what would you like to do?
 (L)og
 (D)one
 
-<<< client
+>>> client:
 
 log
 
@@ -537,11 +539,11 @@ Here is the game menu:
 (G)lumbia
 (E)nd
 
-<<< client
+>>> client:
 
 end
 
->>> server
+<<< server:
 
 Bye, Dear Amanda!
 

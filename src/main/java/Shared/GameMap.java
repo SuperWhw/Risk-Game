@@ -20,9 +20,11 @@ public class GameMap {
         return territorySet;
     }
 
-    public Territory getTerritoryByName(String string) {
-        return this.territoryMap.get(string);
+    public Territory getTerritoryByName(String aliasName) {
+        return this.territoryMap.get(aliasName);
     }
+
+    public String getFullName(String aliasName) { return this.territoryMap.get(aliasName).getName(); }
 
     public HashMap<String, Territory> getTerritoryMap() {
         return this.territoryMap;
@@ -31,7 +33,7 @@ public class GameMap {
         Collections.addAll(territorySet, territoryList);
         this.territoryMap = new HashMap<String, Territory>();
         for(Territory territory : territoryList) {
-            this.territoryMap.put(territory.getName(),territory);
+            this.territoryMap.put(territory.getAliasName(),territory);
         }
     }
 
@@ -39,7 +41,7 @@ public class GameMap {
         this.territoryMap = new HashMap<String, Territory>();
         for(Territory territory : territoryList) {
             this.territorySet.add(territory);
-            this.territoryMap.put(territory.getName(),territory);
+            this.territoryMap.put(territory.getAliasName(),territory);
         }
     }
 
