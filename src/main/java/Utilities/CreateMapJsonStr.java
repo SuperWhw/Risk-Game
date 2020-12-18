@@ -1,6 +1,6 @@
 package Utilities;
 
-import Client.*;
+import Shared.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
