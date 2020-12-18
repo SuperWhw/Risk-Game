@@ -432,7 +432,7 @@ Hi Amanda, what would you like to do?
 (H)elp
 (D)one
 
-(After showing the map, we continue ask question right before showing)
+(After showing the map, we continue ask the question right before showing)
 
 >>> client:
 
@@ -504,14 +504,14 @@ Amanda player: (You)
 -------------
 No territory
 
-Blue player: 
+Blue player:
 ------------
 5 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
 6 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
 2 units in Narnia (next to: Elantris, Midkemia)
 2 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
 
-Red player: 
+Red player:
 -----------
 7 units in Gondor (next to: Oz, Mordor) 
 8 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
@@ -550,3 +550,11 @@ Bye, Dear Amanda!
 00000000000000000000
 ----Disconnected---
 00000000000000000000
+
+<<< server
+
+Amanda player: (You)
+-------------
+5 units in (A) Narnia (next to: (D) Elantris, (E) Midkemia) 
+3 units in (B) Midkemia (next to: (F) Narnia, (G) Elantris, (H) Scadrial, (I) Oz) 
+12 units in (C) Oz (next to: (J) Midkemia, (K) Scadrial, (L) Mordor, (M) Gondor)

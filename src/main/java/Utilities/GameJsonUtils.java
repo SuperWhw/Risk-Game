@@ -189,10 +189,10 @@ public class GameJsonUtils {
         return gson.toJson(adaptor);
     }
 
-    public ArrayList<OrderBasic> readJsonToOrderList(String ordersJson) {
+    public ArrayList<OrderBasic> readJsonToOrderList(String ordersJson, GameMap gameMap) {
         Gson gson = new Gson();
         OrderBasicListJsonAdapter adaptor = gson.fromJson(ordersJson, OrderBasicListJsonAdapter.class);
-        return adaptor.toOrderList();
+        return adaptor.toOrderList(gameMap);
     }
 
     public static void main(String[] argv) {

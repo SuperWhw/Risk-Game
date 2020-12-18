@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameServerController {
@@ -32,6 +33,10 @@ public class GameServerController {
         } catch(IOException e) {
             System.out.println("TCP Server creation error");
         }
+    }
+    public static void main(String[] args) throws IOException{
+        GameServerController gameServerController = new GameServerController(6666, 2);
+        gameServerController.run();
     }
 
 
@@ -66,8 +71,8 @@ class Handler extends Thread {
     private void handle(InputStream input, OutputStream output) throws IOException {
         var writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
         var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
-        writer.write("Welcome to the RISK Game!\n");
-        writer.write("Please first input your name: ");
+        writer.write("Welcome to the RISK Game!\n" +
+                "Please first input your name: ");
         writer.flush();
         for (;;) {
             String s = reader.readLine();

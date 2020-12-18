@@ -13,8 +13,8 @@ public class GameClientController {
     private GameMap gameMap;
     private ArrayList<Territory> Territories;
     private Socket sock;
-    private GameClientController() throws java.net.UnknownHostException, IOException{
-        this.sock = new Socket("localhost",6666);
+    private GameClientController(String host, int port) throws java.net.UnknownHostException, IOException{
+        this.sock = new Socket(host,port);
     }
     public void buildConnection() throws IOException {
         try (InputStream input = sock.getInputStream()) {
@@ -48,7 +48,7 @@ public class GameClientController {
     }
 
     public static void main(String[] args) throws IOException {
-        GameClientController ccc = new GameClientController();
+        GameClientController ccc = new GameClientController("localhost",6666);
         ccc.buildConnection();
     }
 }
