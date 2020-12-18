@@ -12,40 +12,41 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class GameServerController {
-    private ArrayList<Player> players;
-    private ArrayList<Territory> territories;
-    private int numOfPlayers;
-    private GameMap gameMap;
-    private ArrayList<Order> receivedOrders;
-    private ServerSocket ss;
-    private GameServerController() throws IOException{
-        ss = new ServerSocket(6666);
+    private final int PORT;
+    private int playerNum;
+
+    public GameServerController(int PORT, int playerNum) throws IOException{
+        this.PORT = PORT;
+        this.playerNum = playerNum;
     }
-    private void run() {
+
+    public void run() throws IOException {
+        ServerSocket ss = new ServerSocket(PORT);
         try {
             System.out.println("server is running...");
-            for (; ; ) {
+            int currPlayerNum = 0;
+            while(currPlayerNum < playerNum) {
                 Socket sock = ss.accept();
                 System.out.println("connected from " + sock.getRemoteSocketAddress());
-                Thread t = new Handler(sock);
+                System.out.printf("now we have %d players, waiting other %d players...\n",++currPlayerNum,playerNum-currPlayerNum);
+                Thread t = new Handler(sock, playerNum);
                 t.start();
             }
-        }
-        catch(IOException e) {
+        } catch(IOException e) {
             System.out.println("TCP Server creation error");
         }
     }
-    public static void main(String[] args)  throws IOException{
-        GameServerController gsc = new GameServerController();
-        gsc.run();
-    }
+
+
 }
 
 class Handler extends Thread {
     Socket sock;
+    int playerNum;
 
-    public Handler(Socket sock) {
+    public Handler(Socket sock, int playerNum) {
         this.sock = sock;
+        this.playerNum = playerNum;
     }
 
     @Override
@@ -58,15 +59,18 @@ class Handler extends Thread {
             try {
                 this.sock.close();
             } catch (IOException ioe) {
+                System.out.println("Client close failed!");
             }
-            System.out.println("client disconnected.");
+            System.out.println("Client disconnected.");
+            playerNum--;
         }
     }
 
     private void handle(InputStream input, OutputStream output) throws IOException {
         var writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
         var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
-        writer.write("hello\n");
+        writer.write("Welcome to the RISK Game!\n");
+        writer.write("Please first input your name: ");
         writer.flush();
         for (;;) {
             String s = reader.readLine();

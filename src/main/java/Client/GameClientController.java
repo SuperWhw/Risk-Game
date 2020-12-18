@@ -14,11 +14,13 @@ public class GameClientController {
     private GameClientController() throws java.net.UnknownHostException, IOException{
         this.sock = new Socket("localhost",6666);
     }
-    private void buildConnection() throws IOException{
+    public void buildConnection() throws IOException {
         try (InputStream input = sock.getInputStream()) {
             try (OutputStream output = sock.getOutputStream()) {
                 handle(input, output);
             }
+        } catch(IOException e) {
+            System.out.println("TCP Client creation error");
         }
         this.sock.close();
         System.out.println("disconnected.");
