@@ -1,0 +1,550 @@
+# Risc Game 1.0 Process
+
+ServerBash:<<< server:
+
+ClientBash:>>> client
+
+<<< server:
+
+-------Welcome to Risc Game!-------
+Please input your name:
+
+>>> client:
+
+Amanda
+
+<<< server:
+
+00000000000000000000
+------Connected-----
+00000000000000000000
+Here is the game menu:
+(W)ideRift
+(G)lumbia
+(E)nd
+
+>>> client:
+
+M
+
+<<< server:
+
+Please type: W, G, or E
+
+>>> client
+
+W
+
+<<< server:
+
+Matching Game... (we couldadd a clock maybe)
+Matching successfully!/Matching failed!
+
+<<< server:
+
+Amanda player: (You)
+-------------
+Narnia (next to: Elantris, Midkemia) 
+Midkemia (next to: Narnia, Elantris, Scadrial, Oz) 
+Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+Roshar (next to: Hogwarts, Scadrial, Elantris) 
+Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Red player: 
+-----------
+Gondor (next to: Oz, Mordor) 
+Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+<<< server:
+
+Your init units is 20:
+You can now set it to your territories: Marnia Midkemia Oz
+(S)et By Hand
+(D)efault Settings
+
+>>> client:
+
+S
+
+<<< server
+
+Please type value (1 - 18) to give Marnia:
+
+>>> client:
+
+5
+
+<<< server:
+
+Set Marnia : 5 Digits
+Please type value(1 - 14) to give Midkemia:
+
+>>> client:
+
+16
+
+<<< server:
+
+units out of range, please type it again:
+
+>>> client;
+
+3
+
+<<< server:
+
+Set Midkemia: 3
+Oz automatically set to 12
+
+Amanda player: (You)
+-------------
+5 units Narnia (next to: Elantris, Midkemia) 
+3 units Midkemia (next to: Narnia, Elantris, Scadrial, Oz) 
+12 units Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Do you want to start games?
+(D)one
+(R)eset Units
+
+>>> client
+
+D
+
+<<< server
+
+Waiting for game to start... (Maybe a clock ticking here)
+
+>>> client
+
+Game Start!
+
+Amanda player: (You)
+-------------
+5 units in Narnia (next to: Elantris, Midkemia) 
+3 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz) 
+12 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Red player: 
+-----------
+6 units in Gondor (next to: Oz, Mordor) 
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(D)one
+
+>>> client
+
+M
+
+<<< server
+
+Which one to move from?
+(A) Narnia (5)
+(B) Midkemia (3)
+(C) Oz (12)
+(R) Return
+
+>>> client
+
+A
+
+<<< server
+
+Which one to move to?
+(B) Midkemia (3)
+(C) Oz (12)
+(R) Return
+
+>>> client
+
+B
+
+<<< server
+
+Move: (A) Narnia (5) -> (B) Midkemia(3)
+How many units do you want to move? (1-4)
+
+>>> client
+
+3
+
+<<< server
+
+Move: (A) Narnia (5) -> (B) Midkemia(3) 3 Units
+Resuilt:
+(A) Narnia: 2 units
+(B) Midkemia: 6 units
+
+Do you want to confirm?
+
+(D)one
+(R)eturn
+
+>>> client
+
+D
+
+<<< server
+
+Amanda player: (You)
+-------------
+2 units in Narnia (next to: Elantris, Midkemia)
+6 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz) 
+12 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Red player: 
+-----------
+6 units in Gondor (next to: Oz, Mordor) 
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(D)one
+
+<<< client
+
+m (lowercase is permittable)
+
+>>> server
+
+Which one to attack from?
+(A) Narnia (2)
+(B) Midkemia (6)
+(C) Oz (12)
+(R) Return
+
+<<< client
+
+C
+
+>>> server
+
+which one to attack to?
+(A) Scadrial (5)
+(B) Mordor (7, Red)
+(C) Gondor (6, Red)
+(R) Return
+
+<<< client
+
+A
+
+>>> server
+
+Attack: Oz (12) -> Scadrial (5, Blue)
+
+How many units? (1-11)
+
+<<< client
+
+0
+
+>>> server
+
+Units out of Range, please input again
+---------------
+
+Attack: Oz (12) -> Scadrial (5, Blue)
+
+How many units? (1-11)
+
+>>> client
+
+6
+
+>>> server 
+
+Attack: Oz (12) -> Scadrial (5, Blue) 6 units
+Result:
+Oz: 6 units
+Scadrial: unknow
+
+Do you want to confirm?
+
+(D)one
+(R)eturn
+
+<<< client
+
+D
+
+>>> server
+
+Amanda player: (You)
+-------------
+2 units in Narnia (next to: Elantris, Midkemia)
+6 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+6 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris) unknown now
+
+Red player: 
+-----------
+6 units in Gondor (next to: Oz, Mordor) 
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(C)heck
+(S)how
+(H)elp
+(D)one
+
+<<< client
+
+C
+
+>>> server
+
+your confirmed orders:
+(A) Move: (A) Narnia (5) -> (B) Midkemia(3) 3 Units
+(B) Attack: Oz (12) -> Scadrial (5, Blue) 6 units
+(D) Done
+
+you can modefiy order by its charactor, or just continue (D):
+
+<<< client
+
+a
+
+>>> server
+
+Move: (A) Narnia (5) -> (B) Midkemia(3) 3 Units
+
+How do you want to modefy it?
+
+(A) Cancel
+(B) Done
+
+<<< client
+
+A
+
+Amanda player: (You)
+-------------
+5 units in Narnia (next to: Elantris, Midkemia)
+3 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+6 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris) (?unknown now?)
+
+Red player: 
+-----------
+6 units in Gondor (next to: Oz, Mordor) 
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(C)heck
+(S)how
+(H)elp
+(D)one
+
+>>> client
+
+H
+
+<<< client
+
+(M)ove: move units from Territory A to Territory B, you can only move between your territories.
+
+(A)ttack: attack one enermy territory by moving units from your Territory
+
+(C)heck: check your confirmed order list
+
+(S)how: Show you the map information. You can type (S)how anytime
+
+(H)elp: Show the helper information.
+
+(D)one: Confirm your orders, waiting for the next round
+
+How to type?
+
+For example, your can type move, Move, M, m to proceed.
+
+>>> client
+
+show
+
+<<< server
+
+Amanda player: (You)
+-------------
+5 units in Narnia (next to: Elantris, Midkemia)
+3 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+6 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player: 
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris) (?unknown now?)
+
+Red player: 
+-----------
+6 units in Gondor (next to: Oz, Mordor) 
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+>>> server
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(C)heck
+(S)how
+(H)elp
+(D)one
+
+(After showing the map, we continue ask question right before showing)
+
+<<< client
+
+D
+
+>>> Server
+
+Your orders confirmed.
+
+Waiting for other players to confirm...
+
+
+>>> Server
+
+Here is the round 2:
+
+Amanda player: (You)
+-------------
+2 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+4 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+2 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Blue player: 
+------------
+5 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+6 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+2 units in Narnia (next to: Elantris, Midkemia)
+
+Red player: 
+-----------
+7 units in Gondor (next to: Oz, Mordor) 
+8 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+9 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+>>> server
+
+Hi Amanda, what would you like to do?
+(M)ove
+(A)ttack
+(C)heck
+(S)how
+(H)elp
+(L)og
+(D)one
+
+<<< client
+
+log
+
+>>> client
+
+Round 1:
+Amanda player: (You)
+-------------
+Attack: Oz (12) -> Scadrial (5, Blue) 6 units
+
+Blue player:
+-------------
+Attack: Elantris (10) -> Midkemia (5, Blue) 6 units
+
+All terrirtories automatically add one at each round end.
+
+...................
+After so many rounds
+
+<<< server
+
+Amanda player: (You)
+-------------
+No territory
+
+Blue player: 
+------------
+5 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia) 
+6 units in Roshar (next to: Hogwarts, Scadrial, Elantris) 
+2 units in Narnia (next to: Elantris, Midkemia)
+2 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+
+Red player: 
+-----------
+7 units in Gondor (next to: Oz, Mordor) 
+8 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial) 
+9 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+2 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+4 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+You lost all territory, what would you like to do?
+
+(D)one
+(H)elp
+(S)how
+(E)nd
+
+>>> client
+
+End
+
+<<< server
+
+Game end, you lose...
+-------------
+Here is the game menu:
+(W)ideRift
+(G)lumbia
+(E)nd
+
+<<< client
+
+end
+
+>>> server
+
+Bye, Dear Amanda!
+
+00000000000000000000
+----Disconnected---
+00000000000000000000
