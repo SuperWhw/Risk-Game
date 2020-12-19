@@ -1,5 +1,6 @@
 package Client;
 
+import Server.BasicTCPServer;
 import Shared.*;
 import java.io.*;
 import java.net.Socket;
@@ -8,47 +9,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameClientController {
-    private Player player;
-    private int numOfPlayers;
-    private GameMap gameMap;
-    private ArrayList<Territory> Territories;
-    private Socket sock;
-    private GameClientController(String host, int port) throws java.net.UnknownHostException, IOException{
-        this.sock = new Socket(host,port);
-    }
-    public void buildConnection() throws IOException {
-        try (InputStream input = sock.getInputStream()) {
-            try (OutputStream output = sock.getOutputStream()) {
-                handle(input, output);
-            }
-        } catch(IOException e) {
-            System.out.println("TCP Client creation error");
-        }
-        this.sock.close();
-        System.out.println("disconnected.");
-    }
-
-    private static void handle(InputStream input, OutputStream output) throws IOException {
-        var writer = new BufferedWriter(new OutputStreamWriter(output, StandardCharsets.UTF_8));
-        var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("[server] " + reader.readLine());
-        for (;;) {
-            System.out.print(">>> "); // 打印提示
-            String s = scanner.nextLine(); // 读取一行输入
-            writer.write(s);
-            writer.newLine();
-            writer.flush();
-            String resp = reader.readLine();
-            System.out.println("<<< " + resp);
-            if (resp.equals("bye")) {
-                break;
-            }
-        }
-    }
 
     public static void main(String[] args) throws IOException {
-        GameClientController ccc = new GameClientController("localhost",6666);
-        ccc.buildConnection();
+
+        var client = new BasicTCPClient(6666, "127.0.0.1", "localhost");
+        client.BuildConnection();
+        System.out.println(client.ReceiveMessage());
+        System.out.print(">>> "); // 打印提示
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.nextLine(); // 读取一行输入
+        client.SendMessage(s + "\n");
+        client.end();
+
     }
 }
