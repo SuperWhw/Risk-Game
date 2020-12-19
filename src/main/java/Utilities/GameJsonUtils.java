@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
+import java.lang.*;
 
 /*
     Here is the class than transform between Player/Territory/OrderBasic and JsonStr
@@ -108,7 +109,11 @@ public class GameJsonUtils {
 
             // add neighbors
             for(TerritoryJsonAdaptor adaptor : this.territorySet) {
-                Territory territory = gameMap.getTerritoryByName(adaptor.name);
+                Territory territory = gameMap.getTerritoryByName(adaptor.aliasName);
+                if(territory == null) {
+                    System.out.println("getTerritory failure");
+                    continue;
+                }
                 territory.setNeighbors(new HashSet<>() {{
                     for(String neighbor : adaptor.neighbors) {
                         add(gameMap.getTerritoryByName(neighbor));
@@ -134,22 +139,21 @@ public class GameJsonUtils {
             this.type = order.getOrderType();
         }
 
-        public OrderBasic toOrderBasic(GameMap gameMap) {
-            if(this.type.equals("move")) {
-                return new MoveOrder(null, "move",
-                        gameMap.getTerritoryByName(this.fromT),
-                        gameMap.getTerritoryByName(this.toT), this.units);
+        public Object toOrderBasic(GameMap gameMap) {
+            if (this.type.equals("MoveOrder") || this.type.equals("AttackOrder")) {
+                try {
+                    return Class.forName(this.type).getDeclaredConstructor().newInstance(
+                            null, this.type,
+                            gameMap.getTerritoryByName(this.fromT),
+                            gameMap.getTerritoryByName(this.toT), this.units);
+                } catch (Exception e) {
+                    System.out.println("Class: " + this.type + " create failure");
+                }
             }
-            else if(this.type.equals("attack")) {
-                return new AttackOrder(null, "attack",
-                        gameMap.getTerritoryByName(this.fromT),
-                        gameMap.getTerritoryByName(this.toT), this.units);
-            }
-            else {
-                return null;
-            }
+            return null;
         }
     }
+
 
     class OrderBasicListJsonAdapter {
         public ArrayList<OrderBasicJsonAdapter> orderBasics;
@@ -164,8 +168,8 @@ public class GameJsonUtils {
         public ArrayList<OrderBasic> toOrderList(GameMap gameMap) {
             ArrayList<OrderBasic> orders = new ArrayList<OrderBasic>();
             for(OrderBasicJsonAdapter adaptor : this.orderBasics) {
-                OrderBasic order = adaptor.toOrderBasic(gameMap);
-                if(order != null) orders.add(order);
+                Object order = adaptor.toOrderBasic(gameMap);
+                if(order != null && (order instanceof OrderBasic)) orders.add((OrderBasic)order);
             }
             return orders;
         }

@@ -76,10 +76,10 @@ public class CreateMapJsonStr {
         }});
 
         // set orders
-        MoveOrder m1 = new MoveOrder(p1, "move", Narnia, Oz, 3);
-        MoveOrder m2 = new MoveOrder(p3, "move", Mordor, Hogwarts, 6);
-        AttackOrder a1 = new AttackOrder(p1, "attack", Midkemia, Scadrial, 10);
-        AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Hogwarts, 4);
+        MoveOrder m1 = new MoveOrder(p1, "MoveOrder", Narnia, Oz, 3);
+        MoveOrder m2 = new MoveOrder(p3, "MoveOrder", Mordor, Hogwarts, 6);
+        AttackOrder a1 = new AttackOrder(p1, "AttackOrder", Midkemia, Scadrial, 10);
+        AttackOrder a2 = new AttackOrder(p2, "AttackOrder", Scadrial, Hogwarts, 4);
 
         ArrayList<OrderBasic> orders = new ArrayList<OrderBasic>();
         orders.add(m1);
