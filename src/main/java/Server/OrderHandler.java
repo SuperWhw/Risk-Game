@@ -1,17 +1,14 @@
-package Shared;
+package Server;
+
+import Shared.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class OrderHandler {
-    GameMap map;
 
-    public OrderHandler(GameMap map) {
-        this.map = map;
-    }
-
-    public GameMap execute(ArrayList<OrderBasic> orderList) {
+    public void execute(GameMap map, ArrayList<OrderBasic> orderList) {
 
         ArrayList<MoveOrder> moveList = new ArrayList<>();
         ArrayList<AttackOrder> attackList = new ArrayList<>();
@@ -39,7 +36,6 @@ public class OrderHandler {
         //execute attack;
         for(var order: attackList) order.execute();
 
-        return map;
     }
 
     private ArrayList<AttackOrder> mergeAttack(ArrayList<AttackOrder> attackList) {
@@ -96,3 +92,4 @@ public class OrderHandler {
         return playerArray;
     }
 }
+

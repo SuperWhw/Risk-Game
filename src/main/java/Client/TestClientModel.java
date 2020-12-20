@@ -1,13 +1,18 @@
 package Client;
 
 import Shared.*;
+import Utilities.FileIOBasics;
+import Utilities.GameJsonUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Scanner;
 
 
-public class TestModel {
+public class TestClientModel {
     public static void main(String[] args) {
+
         // create players
         Player p1 = new Player("p1");
         Player p2 = new Player("p2");
@@ -79,33 +84,29 @@ public class TestModel {
         GameMap map = new GameMap();
         map.buildMap(new Territory[]{Narnia,Midkemia,Oz,Elantris,Scadrial,Roshar,Gondor,Mordor,Hogwarts});
 
-        // create action
-        MoveOrder m1 = new MoveOrder(p1, "move", Narnia, Oz, 0);
-        MoveOrder m2 = new MoveOrder(p3, "move", Mordor, Hogwarts, 0);
-        MoveOrder m3 = new MoveOrder(p1, "move", Narnia, Elantris, 2);
-        AttackOrder a1 = new AttackOrder(p1, "attack", Midkemia, Scadrial, 3);
-        AttackOrder a2 = new AttackOrder(p2, "attack", Scadrial, Midkemia, 1);
-        AttackOrder a3 = new AttackOrder(p3, "attack", Mordor, Scadrial, 3);
+        // input order loop, "commit" for break
+        // print gameMap
+        Scanner scanner = new Scanner(System.in);
+        String in;
+        GameClientViewer viewer = new GameClientViewer();
 
-        ArrayList<OrderBasic> orderList = new ArrayList<>(Arrays.asList(m1,m2,m3,a1,a2,a3));
-
-        // check order
-        CheckHelper checker = new CheckHelper();
-        System.out.print("order check: ");
-        for(var order: orderList) {
-            System.out.println(checker.checkOrderBasic(order));
+        while(!(in = scanner.nextLine()).equals("commit")) {
+            viewer.printMap(map, p1, "order");
+            System.out.println(in);
         }
-        System.out.println();
+//        // check order
+//        CheckHelper checker = new CheckHelper();
+//        System.out.print("order check: ");
+//        System.out.println(checker.checkOrderBasic(order));
+//        System.out.println();
+//
+//        // take action
+//
+//        OrderHandler orders = new OrderHandler(map);
+//        map = orders.execute(orderList);
+//
+//        // print current state
 
-        // take action
-
-        OrderHandler orders = new OrderHandler(map);
-        map = orders.execute(orderList);
-
-        // print current state
-        for(Territory t: map.getTerritorySet()) {
-            System.out.printf("Territory name: %s\n\tOwner:%s\tUnits: %d\n",t.getName(),t.getOwner().getName(),t.getUnits());
-        }
 
     }
 }

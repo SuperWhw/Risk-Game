@@ -41,8 +41,6 @@ public class AttackOrder extends OrderBasic {
         if(att_units > 0) {  // attacker wins
             toT.setUnits(att_units);
             toT.setOwner(getPlayer());
-            attacker.addTerritory(toT);
-            defender.removeTerritory(toT);
         }
         else {  //defender wins
             toT.setUnits(def_units);

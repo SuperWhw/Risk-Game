@@ -8,16 +8,24 @@ public class CheckHelper {
 
     public boolean checkOrderBasic(OrderBasic order) {
         if(!order.getPlayer().getName().equals(order.getFromT().getOwner().getName())) {
-            System.out.printf("%s does't belong to you!\n", order.getFromT().getName());
+            System.out.printf("%s does not belong to you!\n", order.getFromT().getName());
             return false;
         }
         if(order.getOrderType().equals("move")) {
+            if(order.getFromT().isMoveLock()) {
+                System.out.printf("%s cannot move now!\n", order.getFromT().getName());
+                return false;
+            }
             if(!checkReachable(order.getFromT(), order.getToT())) {
                 System.out.printf("%s cannot move to %s!\n", order.getFromT().getName(), order.getToT().getName());
                 return false;
             }
         }
         else if(order.getOrderType().equals("attack")) {
+            if(order.getFromT().isAttackLock()) {
+                System.out.printf("%s cannot attack now!\n", order.getFromT().getName());
+                return false;
+            }
             if(!checkAttackable(order.getFromT(), order.getToT())) {
                 System.out.printf("%s cannot reach %s!\n", order.getFromT().getName(), order.getToT().getName());
                 return false;

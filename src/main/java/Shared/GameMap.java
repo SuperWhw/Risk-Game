@@ -9,6 +9,7 @@ public class GameMap {
     private HashSet<Territory> territorySet;
     private int initUnits;
     private HashMap<String, Territory> territoryMap;
+
     public GameMap() {
         this.territorySet = new HashSet<>();
         this.territoryMap = new HashMap<String, Territory>();

@@ -8,11 +8,15 @@ public class Territory {
     private HashSet<Territory> neighbors;
     private int territoryUnits;
     private Player territoryOwner;
+    private boolean moveLock;
+    private boolean attackLock;
 
     public Territory(String name, String aliasName) {
         this.territoryName = name;
         this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
+        moveLock = false;
+        attackLock = false;
     }
 
     public Territory(String name, String aliasName, Player owner) {
@@ -20,6 +24,9 @@ public class Territory {
         this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
         this.territoryOwner = owner;
+        owner.addTerritory(this);
+        moveLock = false;
+        attackLock = false;
     }
 
     public Territory(String name, String aliasName, int units, Player owner) {
@@ -28,6 +35,9 @@ public class Territory {
         this.neighbors = new HashSet<>();
         this.territoryUnits = units;
         this.territoryOwner = owner;
+        owner.addTerritory(this);
+        moveLock = false;
+        attackLock = false;
     }
 
     public String getName() {
@@ -48,12 +58,24 @@ public class Territory {
 
     public String getAliasName() { return this.aliasName; }
 
+    public boolean isMoveLock() {
+        return moveLock;
+    }
+
+    public boolean isAttackLock() {
+        return attackLock;
+    }
+
     public void setNeighbors(HashSet<Territory> neighbors) {
         this.neighbors = neighbors;
     }
 
     public void setOwner(Player p) {
+        if(territoryOwner != null) {
+            territoryOwner.removeTerritory(this);
+        }
         territoryOwner = p;
+        p.addTerritory(this);
     }
 
     public void setUnits(int units) {
@@ -63,6 +85,14 @@ public class Territory {
         else {
             territoryUnits = units;
         }
+    }
+
+    public void setMoveLock(boolean moveLock) {
+        this.moveLock = moveLock;
+    }
+
+    public void setAttackLock(boolean attackLock) {
+        this.attackLock = attackLock;
     }
 
     public void addUnits(int n) {
