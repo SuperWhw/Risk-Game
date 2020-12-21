@@ -40,7 +40,7 @@ public class GameClientViewer {
                 }
                 System.out.printf("%s[%d] (next to:", getTerritoryOrderName(t), t.getUnits());
                 for (var tn : t.getNeighbors()) {
-                    System.out.printf(" %s", getTerritoryOrderName(tn));
+                    System.out.printf(" %s[%d]", getTerritoryOrderName(tn), tn.getUnits());
                 }
                 System.out.print(")\n");
             }

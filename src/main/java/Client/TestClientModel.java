@@ -84,15 +84,17 @@ public class TestClientModel {
         GameMap map = new GameMap();
         map.buildMap(new Territory[]{Narnia,Midkemia,Oz,Elantris,Scadrial,Roshar,Gondor,Mordor,Hogwarts});
 
+        // print map
+        GameClientViewer viewer = new GameClientViewer();
+        viewer.printMap(map, p1, "simple");
+
         // input order loop, "commit" for break
         // print gameMap
         Scanner scanner = new Scanner(System.in);
         String in;
-        GameClientViewer viewer = new GameClientViewer();
 
         while(!(in = scanner.nextLine()).equals("commit")) {
             viewer.printMap(map, p1, "order");
-            System.out.println(in);
         }
 //        // check order
 //        CheckHelper checker = new CheckHelper();
