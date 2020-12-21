@@ -1,23 +1,19 @@
 package Utilities;
 
-import java.util.ArrayList;
-import com.google.gson.*;
-
 public class test {
-    static class Test {
-        ArrayList<String> a = new ArrayList<>();
-        public Test() {
-            this.a.add("asd");
-            this.a.add("ds");
+    public static void main(String[] args) {
+        for(int i = 30; i <= 40; ++i) {
+            System.out.println("\033[" + i + ";1m" + "hello world" + "\033[0m");
+        }
+        for(int i = 90; i <= 98; ++i) {
+            System.out.println("\033[" + i + ";1m" + "hello world" + "\033[0m");
+        }
+        for(int i = 30; i <= 40; ++i) {
+            System.out.println("\033[" + i + ";4m" + "hello world" + "\033[0m");
+        }
+        for(int i = 90; i <= 98; ++i) {
+            System.out.println("\033[" + i + ";4m" + "hello world" + "\033[0m");
         }
     }
-    public static void main(String[] args) {
-
-        //Test test = new Test();
-        //Gson gson = new Gson();
-        ArrayList<String> a = new ArrayList<String>();
-        a.add("a");
-        a.add("bcd");
-        System.out.println(a);
-    }
 }
+
