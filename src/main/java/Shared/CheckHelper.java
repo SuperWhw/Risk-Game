@@ -16,7 +16,7 @@ public class CheckHelper {
                 System.out.printf("%s cannot move now!\n", order.getFromT().getName());
                 return false;
             }
-            if(!checkReachable(order.getFromT(), order.getToT())) {
+            if(!checkReachable(order.getFromT(), order.getToT()) || order.getToT().isAttackLock()) {
                 System.out.printf("%s cannot move to %s!\n", order.getFromT().getName(), order.getToT().getName());
                 return false;
             }
@@ -27,7 +27,7 @@ public class CheckHelper {
                 return false;
             }
             if(!checkAttackable(order.getFromT(), order.getToT())) {
-                System.out.printf("%s cannot reach %s!\n", order.getFromT().getName(), order.getToT().getName());
+                System.out.printf("%s cannot attack %s!\n", order.getFromT().getName(), order.getToT().getName());
                 return false;
             }
         }

@@ -22,7 +22,10 @@ public class GameMap {
     }
 
     public Territory getTerritoryByName(String aliasName) {
-        return this.territoryMap.get(aliasName);
+        if(territoryMap.containsKey(aliasName)) {
+            return territoryMap.get(aliasName);
+        }
+        return null;
     }
 
     public String getFullName(String aliasName) { return this.territoryMap.get(aliasName).getName(); }
@@ -30,16 +33,8 @@ public class GameMap {
     public HashMap<String, Territory> getTerritoryMap() {
         return this.territoryMap;
     }
-    public void buildMap(Territory[] territoryList) {
-        Collections.addAll(territorySet, territoryList);
-        this.territoryMap = new HashMap<String, Territory>();
-        for(Territory territory : territoryList) {
-            this.territoryMap.put(territory.getAliasName(),territory);
-        }
-    }
 
     public void buildMap(ArrayList<Territory> territoryList) {
-        this.territoryMap = new HashMap<String, Territory>();
         for(Territory territory : territoryList) {
             this.territorySet.add(territory);
             this.territoryMap.put(territory.getAliasName(),territory);

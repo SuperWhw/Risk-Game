@@ -89,8 +89,17 @@ public class CreateMapJsonStr {
 
         // build map
         GameMap map = new GameMap();
-        Territory[] territories = new Territory[]{Narnia,Midkemia,Oz,Elantris,Scadrial,Roshar,Gondor,Mordor,Hogwarts};
-        map.buildMap(territories);
+        map.buildMap(new ArrayList<>(){{
+            add(Narnia);
+            add(Midkemia);
+            add(Oz);
+            add(Elantris);
+            add(Scadrial);
+            add(Roshar);
+            add(Gondor);
+            add(Mordor);
+            add(Hogwarts);
+        }});
         ArrayList<Player> players = new ArrayList<Player>();
         players.add(p1);
         players.add(p2);
@@ -98,7 +107,7 @@ public class CreateMapJsonStr {
 
         // create territoryGroup
         // group 1
-        ArrayList<Territory> t1 = new ArrayList<Territory>();;
+        ArrayList<Territory> t1 = new ArrayList<Territory>();
         t1.add(Narnia);
         t1.add(Midkemia);
         t1.add(Oz);

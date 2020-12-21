@@ -3,6 +3,7 @@ package Client;
 import Shared.*;
 import Utilities.FileIOBasics;
 import Utilities.GameJsonUtils;
+import Utilities.GameStringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +83,18 @@ public class TestClientModel {
 
         // build map
         GameMap map = new GameMap();
-        map.buildMap(new Territory[]{Narnia,Midkemia,Oz,Elantris,Scadrial,Roshar,Gondor,Mordor,Hogwarts});
+
+        map.buildMap(new ArrayList<>(){{
+            add(Narnia);
+            add(Midkemia);
+            add(Oz);
+            add(Elantris);
+            add(Scadrial);
+            add(Roshar);
+            add(Gondor);
+            add(Mordor);
+            add(Hogwarts);
+        }});
 
         // print map
         GameClientViewer viewer = new GameClientViewer();
@@ -92,23 +104,25 @@ public class TestClientModel {
         // print gameMap
         Scanner scanner = new Scanner(System.in);
         String in;
+        GameStringUtils gsu = new GameStringUtils();
+        OrderHandler handler = new OrderHandler();
 
-        while(!(in = scanner.nextLine()).equals("commit")) {
-            viewer.printMap(map, p1, "order");
+        while(true) {
+            try {
+                viewer.printMap(map, p1, "order");
+                System.out.println("Please input order: ");
+                in = scanner.nextLine();
+                if(in.equals("commit")) break;
+                OrderBasic order = gsu.strToOrder(map, in, p1);
+
+                handler.execute(map, order);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number format!");
+            } catch (Exception e) {
+                System.out.println();
+            }
+            System.out.println();
         }
-//        // check order
-//        CheckHelper checker = new CheckHelper();
-//        System.out.print("order check: ");
-//        System.out.println(checker.checkOrderBasic(order));
-//        System.out.println();
-//
-//        // take action
-//
-//        OrderHandler orders = new OrderHandler(map);
-//        map = orders.execute(orderList);
-//
-//        // print current state
-
 
     }
 }
