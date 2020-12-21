@@ -7,7 +7,6 @@ import Utilities.*;
 
 // code-writing Tips: Do not forget to initialize ArrayList<> before you use it!!!
 
-
 public class BasicTCPServer {
     private final int PORT;
     private int playerNum;
@@ -50,23 +49,29 @@ public class BasicTCPServer {
         catch(InterruptedException e) {
             System.out.println("Send Message interrupted");
         }
+
     }
 
-    public void receiveMessage() {
+    public ArrayList<String> receiveMessage() {
         try {
             for (var thread : this.threads) {
                 readBuffer.add(thread.receiveMessage());
             }
+            /*
             for (var thread : this.threads) {
                 thread.join();
             }
+            */
         }
         catch(IOException e) {
             System.out.println("Send Message IO Failure");
         }
+        /*
         catch(InterruptedException e) {
             System.out.println("Send Message interrupted");
         }
+        */
+        return readBuffer;
     }
 
     public void end() {
@@ -75,7 +80,4 @@ public class BasicTCPServer {
         }
     }
 
-    public void print() {
-        System.out.println(readBuffer);
-    }
 }

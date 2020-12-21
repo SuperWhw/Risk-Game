@@ -33,4 +33,8 @@ public class Player {
         }
     }
 
+    public boolean hasTerritory(Territory T) {
+        return territories.contains(T);
+    }
+
 }

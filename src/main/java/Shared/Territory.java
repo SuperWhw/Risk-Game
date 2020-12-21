@@ -35,7 +35,16 @@ public class Territory {
         this.neighbors = new HashSet<>();
         this.territoryUnits = units;
         this.territoryOwner = owner;
-        owner.addTerritory(this);
+        if(owner != null) owner.addTerritory(this);
+        moveLock = false;
+        attackLock = false;
+    }
+
+    public Territory(String name, String aliasName, int units) {
+        this.territoryName = name;
+        this.aliasName = aliasName;
+        this.neighbors = new HashSet<>();
+        this.territoryUnits = units;
         moveLock = false;
         attackLock = false;
     }
