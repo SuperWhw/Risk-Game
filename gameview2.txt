@@ -1,0 +1,106 @@
+# Risc Game 1.0 GameBash Functionality
+The game is implemented by Chenglong and Hanwei!
+
+-------Welcome to Risc Game!-------
+Please input your name:
+
+GameBash Risc-Game1.0$ chenglta
+
+00000000000000000000
+------Connected-----
+00000000000000000000
+
+Dear chenglta,
+Please choose your map:
+(W)ideRift (3 players)
+(C)olumbia (5 players)
+(E)nd
+
+GameBash Risc-Game1.0$ C
+
+Columbia Matching...
+
+E)nd
+
+GameBash Risc-Game1.0$ E
+
+Dear chenglta,
+Please choose your map:
+(W)ideRift (3 players)
+(C)olumbia (5 players)
+(E)nd
+
+GameBash Risc-Game1.0$ C
+
+WideRift Matching...
+
+E)nd
+
+Matching successfully!/Matching failed!
+
+chenglta player: (You)
+-------------
+Narnia (next to: Elantris, Midkemia)
+Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player:
+------------
+Elantris (next to: Roshar, Scadrial, Midkemia, Narnia)
+Roshar (next to: Hogwarts, Scadrial, Elantris)
+Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Red player:
+-----------
+Gondor (next to: Oz, Mordor)
+Mordor (next to: Hogwarts, Gondor, Oz, Scadrial)
+Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Your init units is 18:
+You can now set it to your territories: Marnia Midkemia Oz
+Please input three numbers:
+(If you type nothing and enter, we'll set default 6 6 6)
+
+GameBash Risc-Game1.0$
+
+Gondor: 6 units
+Mordor: 6 units
+Hogwarts: 6 units
+
+Type (L)ock to confirm:
+(L)ock
+(R)eset
+
+GameBash Risc-Game1.0$ L
+
+Waiting for other players to confirm...
+
+chenglta player: (You)
+-------------
+2 units in Narnia (next to: Elantris, Midkemia)
+6 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
+12 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+
+Blue player:
+------------
+10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia)
+5 units in Roshar (next to: Hogwarts, Scadrial, Elantris)
+5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+
+Red player:
+-----------
+6 units in Gondor (next to: Oz, Mordor)
+7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial)
+7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+
+Hi chenglta, what would you like to do?
+(M)ove
+(A)ttack
+(D)one
+
+
+
+
+
+
+
