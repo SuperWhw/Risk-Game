@@ -80,11 +80,10 @@ public class Territory {
 
     public void setUnits(int units) {
         if(units < 0) {
+            System.out.printf("%s does not have enough units!\n", this.getName());
             throw new IllegalArgumentException();
         }
-        else {
-            territoryUnits = units;
-        }
+        territoryUnits = units;
     }
 
     public void setMoveLock(boolean moveLock) {
@@ -96,33 +95,19 @@ public class Territory {
     }
 
     public void addUnits(int n) {
-        try{
-            if(n < 0) {
-                throw new IllegalArgumentException();
-            }
-            setUnits(getUnits() + n);
+        if(n < 0) {
+            System.out.println("Invalid units!");
+            throw new IllegalArgumentException();
         }
-        catch (IllegalArgumentException e) {
-            System.out.println("Illegal Argument: Please input valid units!");
-        }
-        catch (Exception e) {
-            System.out.println("Unknown Error!");
-        }
+        setUnits(getUnits() + n);
     }
 
     public void removeUnits(int n) {
-        try{
-            if(n < 0) {
-                throw new IllegalArgumentException();
-            }
-            setUnits(getUnits() - n);
+        if(n < 0) {
+            System.out.println("Invalid units!");
+            throw new IllegalArgumentException();
         }
-        catch (IllegalArgumentException e) {
-            System.out.printf("Territory %s doesn't have enough units!\n", getName());
-        }
-        catch (Exception e) {
-            System.out.println("Unknown Error!");
-        }
+        setUnits(getUnits() - n);
     }
 
 }
