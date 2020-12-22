@@ -89,7 +89,7 @@ public class CreateMapJsonStr {
 
         // build map
         GameMap map = new GameMap();
-        map.buildMap(new ArrayList<>(){{
+        map.setTerritoryMap(new ArrayList<>(){{
             add(Narnia);
             add(Midkemia);
             add(Oz);

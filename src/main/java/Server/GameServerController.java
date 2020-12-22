@@ -35,7 +35,7 @@ public class GameServerController {
         var gameMap = jsonUtil.readJsonToGameMap(MapStr, players);
 
         var viewer = new GameClientViewer();
-        for(var player : gameMap.getPlayerList().values()) {
+        for(var player : gameMap.getPlayerMap().values()) {
             viewer.printMap(gameMap, player, "order");
         }
 

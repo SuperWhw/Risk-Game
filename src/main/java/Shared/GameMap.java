@@ -6,21 +6,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameMap {
-    private HashSet<Territory> territorySet;
     private int initUnits;
     private HashMap<String, Territory> territoryMap;
-    private HashMap<String, Player> playerList;
+    private HashMap<String, Player> playerMap;
 
     public GameMap() {
-        this.territorySet = new HashSet<>();
         this.territoryMap = new HashMap<String, Territory>();
-        this.playerList = new HashMap<String, Player>();
+        this.playerMap = new HashMap<String, Player>();
         this.initUnits = 0;
-    }
-
-    // maybe not need
-    public HashSet<Territory> getTerritorySet() {
-        return new HashSet<>(territoryMap.values());
     }
 
     public Territory getTerritoryByName(String aliasName) {
@@ -31,18 +24,14 @@ public class GameMap {
     }
 
     public Player getPlayerByName(String name) {
-        if(playerList.containsKey(name)) {
-            return playerList.get(name);
+        if(playerMap.containsKey(name)) {
+            return playerMap.get(name);
         }
         return null;
     }
 
-    public HashMap<String, Player> getPlayerList() {
-        return this.playerList;
-    }
-
-    public HashSet<Player> getPlayerSet() {
-        return new HashSet<>(playerList.values());
+    public HashMap<String, Player> getPlayerMap() {
+        return this.playerMap;
     }
 
     public String getFullName(String aliasName) { return this.territoryMap.get(aliasName).getName(); }
@@ -51,16 +40,15 @@ public class GameMap {
         return this.territoryMap;
     }
 
-    public void buildMap(ArrayList<Territory> territoryList) {
+    public void setTerritoryMap(ArrayList<Territory> territoryList) {
         for(Territory territory : territoryList) {
-            this.territorySet.add(territory);
             this.territoryMap.put(territory.getAliasName(),territory);
         }
     }
 
-    public void setPlayers(ArrayList<Player> players) {
+    public void setPlayerMap(ArrayList<Player> players) {
         for(Player player : players) {
-            this.playerList.put(player.getName(),player);
+            this.playerMap.put(player.getName(),player);
         }
     }
 

@@ -106,9 +106,9 @@ public class GameJsonUtils {
             this.territoryGroup = new ArrayList<ArrayList<String>>();
 
             // no need to initialize player in the beginning, map.jason doesn't contain that
-            if(withPlayerInfo && !gameMap.getPlayerList().isEmpty()) {
+            if(withPlayerInfo && !gameMap.getPlayerMap().isEmpty()) {
                 this.players = new ArrayList<String>();
-                for (var player : gameMap.getPlayerList().values()) {
+                for (var player : gameMap.getPlayerMap().values()) {
                     this.players.add(player.getName());
                 }
             }
@@ -127,7 +127,7 @@ public class GameJsonUtils {
             }
 
             // always need to load territories info
-            for(Territory territory : gameMap.getTerritorySet()) {
+            for(Territory territory : gameMap.getTerritoryMap().values()) {
                 this.territorySet.add(new TerritoryJsonAdaptor(territory, withPlayerInfo));
             }
         }
@@ -150,8 +150,8 @@ public class GameJsonUtils {
 
             // create map
             GameMap gameMap = new GameMap();
-            gameMap.buildMap(territoryList);
-            gameMap.setPlayers(players);
+            gameMap.setTerritoryMap(territoryList);
+            gameMap.setPlayerMap(players);
 
             // for each territory, add neighbors
             for(var adaptor : this.territorySet) {
@@ -285,9 +285,9 @@ public class GameJsonUtils {
         var gameMap = jsonUtil.readJsonToGameMap(MapStr, players);
 
         var viewer = new GameClientViewer();
-        for(var player : gameMap.getPlayerList().values()) {
-            viewer.printMap(gameMap, player, "order");
-        }
+
+        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
+
 
         var MapStrAfterOrders = jsonUtil.writeMapToJson(gameMap,null);
         System.out.println(MapStrAfterOrders);
