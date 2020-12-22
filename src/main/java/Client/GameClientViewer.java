@@ -31,13 +31,16 @@ public class GameClientViewer {
         }
         if(style.equals("order")) {
             for (var t : p.getTerritories()) {
+                String color = "white";
                 if(t.isAttackLock()) {
-                    System.out.print("|A|M|");
+                    color = "red";
+                    System.out.print("|" + colorStr("A",color) + "|" +colorStr("M",color) + "|");
                 }
                 else if(t.isMoveLock()) {
-                    System.out.print("|M|");
+                    color = "cyan";
+                    System.out.print("|" +colorStr("M",color) + "|");
                 }
-                System.out.printf("%s[%d] (next to:", getTerritoryOrderName(t), t.getUnits());
+                System.out.print(colorStr(getTerritoryOrderName(t),color) + "[" + t.getUnits() + "] (next to:");
                 for (var tn : t.getNeighbors()) {
                     System.out.printf(" %s[%d]", getTerritoryOrderName(tn), tn.getUnits());
                 }
@@ -50,5 +53,17 @@ public class GameClientViewer {
     private String getTerritoryOrderName(Territory t) {
         int lenAlias = t.getAliasName().length();
         return "(" + t.getAliasName() + ")" + t.getName().substring(lenAlias);
+    }
+
+    private String colorStr(String s, String color) {
+        if(color.equals("cyan")) {
+            return "\033[36m" + s + "\033[0m";
+        }
+        else if(color.equals("red")) {
+            return "\033[31m" + s + "\033[0m";
+        }
+        else {
+            return s;
+        }
     }
 }

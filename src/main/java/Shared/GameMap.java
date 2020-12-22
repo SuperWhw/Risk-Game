@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameMap {
-    private int initUnits;
     private HashMap<String, Territory> territoryMap;
     private HashMap<String, Player> playerMap;
+    private int initUnits;
 
     public GameMap() {
-        this.territoryMap = new HashMap<String, Territory>();
-        this.playerMap = new HashMap<String, Player>();
+        this.territoryMap = new HashMap<>();
+        this.playerMap = new HashMap<>();
         this.initUnits = 0;
     }
 
@@ -34,7 +34,9 @@ public class GameMap {
         return this.playerMap;
     }
 
-    public String getFullName(String aliasName) { return this.territoryMap.get(aliasName).getName(); }
+    public String getFullName(String aliasName) {
+        return this.territoryMap.get(aliasName).getName();
+    }
 
     public HashMap<String, Territory> getTerritoryMap() {
         return this.territoryMap;

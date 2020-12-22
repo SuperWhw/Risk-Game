@@ -96,6 +96,12 @@ public class TestClientModel {
             add(Hogwarts);
         }});
 
+        map.setPlayerMap(new ArrayList<>(){{
+            add(p1);
+            add(p2);
+            add(p3);
+        }});
+
         // print map
         GameClientViewer viewer = new GameClientViewer();
         viewer.printMap(map, p1, "simple");
