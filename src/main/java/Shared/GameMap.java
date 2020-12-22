@@ -20,7 +20,7 @@ public class GameMap {
 
     // maybe not need
     public HashSet<Territory> getTerritorySet() {
-        return territorySet;
+        return new HashSet<>(territoryMap.values());
     }
 
     public Territory getTerritoryByName(String aliasName) {
@@ -40,6 +40,11 @@ public class GameMap {
     public HashMap<String, Player> getPlayerList() {
         return this.playerList;
     }
+
+    public HashSet<Player> getPlayerSet() {
+        return new HashSet<>(playerList.values());
+    }
+
     public String getFullName(String aliasName) { return this.territoryMap.get(aliasName).getName(); }
 
     public HashMap<String, Territory> getTerritoryMap() {

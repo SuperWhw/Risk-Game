@@ -11,12 +11,11 @@ public class GameClientViewer {
         System.out.print("-------------\n");
         printOwnedTerritory(player, style);
 
-//        TODO: getPlayerList
-//        for(var p: map.getPlayerList()) if(p != player) {
-//            System.out.printf("%s player: \n", player.getName());
-//            System.out.print("-------------\n");
-//            printOwnedTerritory(player, style);
-//        }
+        for(var p: map.getPlayerSet()) if(p != player) {
+            System.out.printf("%s player: \n", player.getName());
+            System.out.print("-------------\n");
+            printOwnedTerritory(player, style);
+        }
     }
 
     private void printOwnedTerritory(Player p, String style) {
