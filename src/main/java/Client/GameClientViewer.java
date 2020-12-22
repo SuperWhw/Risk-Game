@@ -3,6 +3,7 @@ package Client;
 import Shared.GameMap;
 import Shared.Player;
 import Shared.Territory;
+import Utilities.ColorPrint;
 
 public class GameClientViewer {
     public void printMap(GameMap map, Player player, String style) {
@@ -30,17 +31,18 @@ public class GameClientViewer {
             System.out.println();
         }
         if(style.equals("order")) {
+            ColorPrint cp = new ColorPrint();
             for (var t : p.getTerritories()) {
-                String color = "white";
+                ColorPrint.Color color = ColorPrint.Color.WHITE;
                 if(t.isAttackLock()) {
-                    color = "red";
-                    System.out.print("|" + colorStr("A",color) + "|" +colorStr("M",color) + "|");
+                    color = ColorPrint.Color.RED;
+                    System.out.print("|" + cp.setColor("A", color) + "|" + cp.setColor("M",color) + "|");
                 }
                 else if(t.isMoveLock()) {
-                    color = "cyan";
-                    System.out.print("|" +colorStr("M",color) + "|");
+                    color = ColorPrint.Color.SKYBLUE;
+                    System.out.print("|" +cp.setColor("M",color) + "|");
                 }
-                System.out.print(colorStr(getTerritoryOrderName(t),color) + "[" + t.getUnits() + "] (next to:");
+                System.out.print(cp.setColor(getTerritoryOrderName(t),color) + "[" + t.getUnits() + "] (next to:");
                 for (var tn : t.getNeighbors()) {
                     System.out.printf(" %s[%d]", getTerritoryOrderName(tn), tn.getUnits());
                 }
@@ -53,17 +55,5 @@ public class GameClientViewer {
     private String getTerritoryOrderName(Territory t) {
         int lenAlias = t.getAliasName().length();
         return "(" + t.getAliasName() + ")" + t.getName().substring(lenAlias);
-    }
-
-    private String colorStr(String s, String color) {
-        if(color.equals("cyan")) {
-            return "\033[36m" + s + "\033[0m";
-        }
-        else if(color.equals("red")) {
-            return "\033[31m" + s + "\033[0m";
-        }
-        else {
-            return s;
-        }
     }
 }
