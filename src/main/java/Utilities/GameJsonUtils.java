@@ -182,13 +182,9 @@ public class GameJsonUtils {
 
             //update territory and its owner
             for(var adaptor : territorySet) {
-                var territory = gameMap.getTerritoryByName(adaptor.aliasName);
-                territory.setUnits(adaptor.units);
-                Player player = gameMap.getPlayerByName(adaptor.owner);
-
-                if(!player.hasTerritory(territory)) {
-                    territory.setOwner(player);
-                }
+                var t = gameMap.getTerritoryByName(adaptor.aliasName);
+                t.setUnits(adaptor.units);
+                t.setOwner(gameMap.getPlayerByName(adaptor.owner));
             }
         }
 

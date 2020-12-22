@@ -80,6 +80,7 @@ public class Territory {
     }
 
     public void setOwner(Player p) {
+        if(territoryOwner == p) return;
         if(territoryOwner != null) {
             territoryOwner.removeTerritory(this);
         }
