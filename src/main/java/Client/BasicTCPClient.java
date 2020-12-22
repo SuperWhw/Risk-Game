@@ -17,7 +17,7 @@ public class BasicTCPClient {
         this.ipv4 = ipv4;
         this.hostname = hostname;
     }
-    public void BuildConnection() {
+    public void buildConnection() {
         try {
             var sock = new Socket(hostname, PORT);
             thread  = new tcpIOHandlerThread(sock);
@@ -27,7 +27,7 @@ public class BasicTCPClient {
         }
     }
 
-    public void SendMessage(String output) {
+    public void sendMessage(String output) {
         try {
             thread.sendMessage(output);
         }
@@ -36,7 +36,7 @@ public class BasicTCPClient {
         }
     }
 
-    public String ReceiveMessage() {
+    public String receiveMessage() {
         try {
             return thread.receiveMessage();
         }
