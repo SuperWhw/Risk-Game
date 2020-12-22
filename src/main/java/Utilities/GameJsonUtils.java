@@ -10,12 +10,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.lang.*;
+import java.util.Map;
 
 /*
     Here is the class than transform between Player/Territory/OrderBasic and JsonStr
     com.google.gson is used as public json library
-    In order to better interact with json, 3 intermediate/adaptor inner classes are created to load JsonStr
-    they are:
+    In order to better interact with json,
+    3 intermediate/adaptor inner classes are created to load JsonStr:
 
     class PlayerJsonAdaptor
 
@@ -23,38 +24,45 @@ import java.lang.*;
 
     class GameMapJsonAdaptor
 
-    Three important interfaces are given:
+    6 important interfaces are given:
 
     readMapToJson(): GameMap >>> JsonStr
+
     writeJsonToGameMap(): JsonStr >>> GameMap
-    writeOrderListToJson(): ArrayList<Order> >> JsonStr
+
+    writeOrderListToJson(ArrayList): ArrayList<Order> >> JsonStr
+
     readJsonToOrderList(): JsonStr >> ArrayList<Order>
 
-    -----------------------
-    init_writeMapToJson()
-    ----------------------- only used for initialization
+    writeUnits(Player): Player >> JsonStr
 
-    by 2020.12.21 Shanghai
+    readUnits(ArrayList, GameMap): JsonStr >> update GameMapUnits
+
+    -----------------------
+    init_readMapToJson(GameMap): GameMap >> JsonStr
+    ----------------------- only used for initialization without players info
+
+    2020.12.21-2020.12.23 IN Shanghai
  */
 public class GameJsonUtils {
 
     class PlayerJsonAdaptor {
         public String name;
         public ArrayList<String> territories;
+        public ArrayList<Integer> units;
         public PlayerJsonAdaptor(Player player) {
             this.name = player.getName();
+            territories = new ArrayList<String>();
+            units = new ArrayList<Integer>();
             for(Territory territory : player.getTerritories()) {
                 this.territories.add(territory.getAliasName());
+                this.units.add(territory.getUnits());
             }
         }
-        public Player toPlayer(GameMap gameMap) {
-            var player = new Player(this.name);
-            for(var territory : this.territories) {
-                var Territory = gameMap.getTerritoryByName(territory);
-                if(Territory != null)
-                    player.addTerritory(Territory);
+        public void updateMap(GameMap gameMap) {
+            for(int i = 0; i < territories.size(); ++i) {
+                gameMap.getTerritoryByName(territories.get(i)).setUnits(units.get(i));
             }
-            return player;
         }
         public void print() {
             System.out.println("Player\nname : " + this.name + '\n' + "territories: " + this.territories);
@@ -69,7 +77,8 @@ public class GameJsonUtils {
         public int units;
 
         public void print() {
-            System.out.println("Territory\nname : " + this.name + '\n' + "neighbors: " + this.neighbors);
+            System.out.println("Territory\nname : " + this.name + "\nneighbors: " + this.neighbors +
+                    "\nowners: " + this.owner);
         }
 
         public TerritoryJsonAdaptor(Territory territory, boolean withPlayerInfo) {
@@ -134,8 +143,8 @@ public class GameJsonUtils {
 
         // build a new Game Map: used for GameMap initialization.
         public GameMap toGameMap(ArrayList<String> playerList) {
-
             // create players
+            if(playerList == null) playerList = this.players;
             var players = new ArrayList<Player>();
             for(String playerName : playerList) {
                 players.add(new Player(playerName));
@@ -165,15 +174,22 @@ public class GameJsonUtils {
                         add(gameMap.getTerritoryByName(neighbor));
                     }
                 }});
+                // this is used without territoryGroup
+                if(this.territoryGroup.size() == 0 || this.territoryGroup == null) {
+                    gameMap.getTerritoryByName(adaptor.aliasName).
+                            setOwner(gameMap.getPlayerByName(adaptor.owner));
+                }
             }
 
-            // bound players with territories
+            // bound players with territories while initialization
             for(int i = 0; i < playerList.size(); ++i) {
                 for(int j = 0; j < this.territoryGroup.size(); ++j) {
                     gameMap.getTerritoryByName(this.territoryGroup.get(i).get(j)).
                             setOwner(gameMap.getPlayerByName(playerList.get(i)));
                 }
             }
+
+            gameMap.setInitUnits(initUnits);
 
             return gameMap;
         }
@@ -220,7 +236,6 @@ public class GameJsonUtils {
         }
     }
 
-
     class OrderBasicListJsonAdapter {
         public ArrayList<OrderBasicJsonAdapter> orderBasics;
 
@@ -247,7 +262,7 @@ public class GameJsonUtils {
         return gson.toJson(adaptor);
     }
 
-    public String init_writeMapToJson(GameMap gameMap, ArrayList<ArrayList<Territory>> territoryGroup) {
+    public String init_readMapToJson(GameMap gameMap, ArrayList<ArrayList<Territory>> territoryGroup) {
         Gson gson = new Gson();
         GameMapJsonAdaptor adaptor =  new GameMapJsonAdaptor(gameMap, territoryGroup, false);
         return gson.toJson(adaptor);
@@ -271,6 +286,19 @@ public class GameJsonUtils {
         return adaptor.toOrderList(gameMap);
     }
 
+    public void readUnits(ArrayList<String> TerritoryWithUnitsStr, GameMap gameMap) {
+        Gson gson = new Gson();
+        for(String jsonStr : TerritoryWithUnitsStr) {
+            var adaptor = gson.fromJson(jsonStr, PlayerJsonAdaptor.class);
+            adaptor.updateMap(gameMap);
+        }
+    }
+
+    public String writeUnits(Player player) {
+        Gson gson = new Gson();
+        var adaptor = new PlayerJsonAdaptor(player);
+        return gson.toJson(adaptor);
+    }
 
     public static void main(String[] argv) {
         ArrayList<String> players = new ArrayList<String>();
@@ -286,11 +314,24 @@ public class GameJsonUtils {
 
         var viewer = new GameClientViewer();
 
-        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
-
-
         var MapStrAfterOrders = jsonUtil.writeMapToJson(gameMap,null);
+
         System.out.println(MapStrAfterOrders);
+
+        GameMap gameMap1 = jsonUtil.readJsonToGameMap(MapStrAfterOrders, null);
+
+        var p1 = gameMap1.getPlayerByName("pabc");
+
+        for(Territory territory : p1.getTerritories()) {
+            territory.setUnits(13);
+        }
+
+        var Str = jsonUtil.writeUnits(p1);
+        ArrayList<String> strs = new ArrayList<String>();
+        strs.add(Str);
+        jsonUtil.readUnits(strs, gameMap);
+
+        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
 
     }
 }

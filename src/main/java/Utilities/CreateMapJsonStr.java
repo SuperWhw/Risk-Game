@@ -131,7 +131,7 @@ public class CreateMapJsonStr {
         territoryGroup.add(t3);
 
         GameJsonUtils gjU = new GameJsonUtils();
-        String mapJson = gjU.init_writeMapToJson(map, territoryGroup);
+        String mapJson = gjU.init_readMapToJson(map, territoryGroup);
         FileIOBasics fileIO = new FileIOBasics();
         fileIO.writeFile("map.json", mapJson);
     }
