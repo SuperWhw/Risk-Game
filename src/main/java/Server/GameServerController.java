@@ -27,6 +27,7 @@ public class GameServerController {
         viewer = new GameClientViewer();
         try {
             server = new BasicTCPServer(port, playerNum);
+            server.CreateSockets();
         }
         catch (IOException e) {
             printer.printWithColor("TCP Server build failure, please check your network",
@@ -69,7 +70,7 @@ public class GameServerController {
     }
     void setInitUnits() {
         ArrayList<String> units = server.receiveMessage();
-
+        jsonUtils.readUnits(units, gameMap);
     }
 
     void OneRound() {
@@ -87,9 +88,8 @@ public class GameServerController {
     public static void main(String[] args) throws IOException {
         var control = new GameServerController(6666,3);
         control.InitializeMap();
-
-        // set init units
-
+        control.setInitUnits();
+        control.viewer.printMap(control.gameMap, control.gameMap.getPlayerByName("3"),"order");
         while(!control.isGameDone()) {
             control.OneRound();
         }
