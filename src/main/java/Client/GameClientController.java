@@ -20,6 +20,7 @@ public class GameClientController {
     Scanner scanner;
     GameStringUtils gsu;
     OrderHandler handler;
+    CheckHelper checker;
 
     GameClientController (int port, String ipv4, String hostname) {
         printer = new ColorPrint();
@@ -32,7 +33,10 @@ public class GameClientController {
 
     void setName() {
         System.out.println(client.receiveMessage());
-        String name = scanner.nextLine();
+        String name = "";
+        do {
+            name = scanner.nextLine();
+        } while(!checker.checkName(name));
         client.sendMessage(name);
 
         //build player
@@ -46,19 +50,26 @@ public class GameClientController {
         viewer.printMap(gameMap, own, "simple");
 
         int initUnits = gameMap.getInitUnits();
-
         var territoryList = gameMap.getPlayerByName(own.getName()).getTerritories();
-        String initUnitsList = scanner.nextLine();
-        // check valid
+        String initUnitsList = "";
+        do {
+            initUnitsList = scanner.nextLine();
+        } while(!checker.checkInitUnitsList(initUnitsList,initUnits,territoryList.size()));
+        String[] strArray = initUnitsList.split(" ");
+
         // update territory
+        int index = 0;
+        for(var t: territoryList) {
+            t.setUnits(Integer.parseInt(strArray[index]));
+        }
 
         // send player to server
-        client.sendMessage("");
+        client.sendMessage(own.getName());
     }
 
     void OneRound() {
         String MapStr = client.receiveMessage();
-        gameMap = jsonUtils.readJsonToGameMap(MapStr, null); // updates?
+        gameMap = jsonUtils.readJsonToGameMap(MapStr, null); // TODO: updates?
 
         ArrayList<OrderBasic> orderList = new ArrayList<>();
         String in;

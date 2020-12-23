@@ -6,6 +6,37 @@ import java.util.Queue;
 
 public class CheckHelper {
 
+    public boolean checkName(String s) {
+        if(s == null) {
+            System.out.println("Empty name!");
+            return false;
+        }
+        if(s.matches("[a-zA-Z]+")) return true;
+        else {
+            System.out.println("Name should only contain letters!");
+            return false;
+        }
+    }
+
+    public boolean checkInitUnitsList(String s, int totalUnits, int territoryNum) {
+        String[] strArray = s.split(" ");
+        if(strArray.length != territoryNum) {
+            System.out.printf("Argument length is not equal to %d!\n",territoryNum);
+            return false;
+        }
+        try {
+            int sum = 0;
+            for(var str: strArray) {
+                sum += Integer.parseInt(str);
+            }
+            if(sum == totalUnits) return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format!");
+            return false;
+        }
+        return false;
+    }
+
     public boolean checkOrderBasic(OrderBasic order) {
         if(!order.getPlayer().getName().equals(order.getFromT().getOwner().getName())) {
             System.out.printf("%s does not belong to you!\n", order.getFromT().getName());

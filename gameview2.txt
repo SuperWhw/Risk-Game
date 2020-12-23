@@ -75,28 +75,51 @@ GameBash Risc-Game1.0$ L
 
 Waiting for other players to confirm...
 
-chenglta player: (You)
+p1 player: (You)
 -------------
-2 units in Narnia (next to: Elantris, Midkemia)
-6 units in Midkemia (next to: Narnia, Elantris, Scadrial, Oz)
-12 units in Oz (next to: Midkemia, Scadrial, Mordor, Gondor)
+(Mi)dkemia[12] (next to: (N)arnia[10] (S)cadrial[5] (O)z[8] (E)lantris[6])
+(N)arnia[10] (next to: (Mi)dkemia[12] (E)lantris[6])
+(O)z[8] (next to: (Mi)dkemia[12] (G)ondor[13] (S)cadrial[5] (Mo)rdor[14])
 
-Blue player:
-------------
-10 units in Elantris (next to: Roshar, Scadrial, Midkemia, Narnia)
-5 units in Roshar (next to: Hogwarts, Scadrial, Elantris)
-5 units in Scadrial (next to: Elantris, Roshar, Hogwats, Mordor Oz, Midkemia, Elantris)
+p2 player:
+-------------
+(R)oshar[3] (next to: (H)ogwarts[3] (S)cadrial[5] (E)lantris[6])
+(S)cadrial[5] (next to: (H)ogwarts[3] (R)oshar[3] (Mi)dkemia[12] (O)z[8] (Mo)rdor[14] (E)lantris[6])
+(E)lantris[6] (next to: (R)oshar[3] (Mi)dkemia[12] (N)arnia[10] (S)cadrial[5])
 
-Red player:
------------
-6 units in Gondor (next to: Oz, Mordor)
-7 units in Mordor (next to: Hogwarts, Gondor, Oz, Scadrial)
-7 units in Hogwarts (next to: Mordor, Scadrial, Roshar)
+p3 player:
+-------------
+(H)ogwarts[3] (next to: (R)oshar[3] (S)cadrial[5] (Mo)rdor[14])
+(G)ondor[13] (next to: (O)z[8] (Mo)rdor[14])
+(Mo)rdor[14] (next to: (H)ogwarts[3] (G)ondor[13] (S)cadrial[5] (O)z[8])
 
-Hi chenglta, what would you like to do?
-(M)ove
-(A)ttack
-(D)one
+Hi p1, please input order, input "commit" when all orders done:
+
+(H)elp
+
+GameBash Risc-Game1.0$ M Mi N 1
+
+p1 player: (You)
+-------------
+|M|(Mi)dkemia[11] (next to: (N)arnia[11] (S)cadrial[5] (O)z[8] (E)lantris[6])
+(N)arnia[11] (next to: (Mi)dkemia[11] (E)lantris[6])
+(O)z[8] (next to: (Mi)dkemia[11] (G)ondor[13] (S)cadrial[5] (Mo)rdor[14])
+
+p2 player:
+-------------
+(R)oshar[3] (next to: (H)ogwarts[3] (S)cadrial[5] (E)lantris[6])
+(S)cadrial[5] (next to: (H)ogwarts[3] (R)oshar[3] (Mi)dkemia[11] (O)z[8] (Mo)rdor[14] (E)lantris[6])
+(E)lantris[6] (next to: (R)oshar[3] (Mi)dkemia[11] (N)arnia[11] (S)cadrial[5])
+
+p3 player:
+-------------
+(H)ogwarts[3] (next to: (R)oshar[3] (S)cadrial[5] (Mo)rdor[14])
+(G)ondor[13] (next to: (O)z[8] (Mo)rdor[14])
+(Mo)rdor[14] (next to: (H)ogwarts[3] (G)ondor[13] (S)cadrial[5] (O)z[8])
+
+
+
+
 
 
 
