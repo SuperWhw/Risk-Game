@@ -28,7 +28,10 @@ public class GameClientController {
         jsonUtils = new GameJsonUtils();
         viewer = new GameClientViewer();
         scanner = new Scanner(System.in);
+        checker = new CheckHelper();
+        handler = new OrderHandler();
         client = new BasicTCPClient(port, ipv4, hostname);
+        client.buildConnection();
     }
 
     void setName() {
@@ -38,6 +41,7 @@ public class GameClientController {
             name = scanner.nextLine();
         } while(!checker.checkName(name));
         client.sendMessage(name);
+        System.out.println(name + " is sent");
 
         //build player
         own = new Player(name);
@@ -45,9 +49,13 @@ public class GameClientController {
 
     void InitializeMap() {
         // receive map
+        System.out.println(1);
         String MapStr = client.receiveMessage();
+        System.out.println(MapStr);
         gameMap = jsonUtils.readJsonToGameMap(MapStr, null);
+        System.out.println(2);
         viewer.printMap(gameMap, own, "simple");
+
 
         int initUnits = gameMap.getInitUnits();
         var territoryList = gameMap.getPlayerByName(own.getName()).getTerritories();
@@ -61,10 +69,12 @@ public class GameClientController {
         int index = 0;
         for(var t: territoryList) {
             t.setUnits(Integer.parseInt(strArray[index]));
+            own.addTerritory(t);
         }
 
         // send player to server
-        client.sendMessage(own.getName());
+        String ownStr = jsonUtils.writeUnits(own);
+        client.sendMessage(ownStr);
     }
 
     void OneRound() {

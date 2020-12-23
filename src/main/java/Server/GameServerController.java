@@ -48,10 +48,12 @@ public class GameServerController {
     }
 
     void InitializeMap() {
-        server.sendMessage("Hello this is your host, please input your name:\n");
+        server.sendMessage("Hello this is your host, please input your name:");
 
         // create n players
+        System.out.println("start receive");
         var players = server.receiveMessage();
+        System.out.println("Message received " + players);
         ArrayList<Player> playerList = new ArrayList<>();
         for(var player : players) {
             playerList.add(new Player(player));
@@ -61,14 +63,10 @@ public class GameServerController {
         var MapStr = fileIO.readJsonFile("map.json");
         gameMap = jsonUtils.readJsonToGameMap(MapStr, players);
 
-        // printMap
-        var viewer = new GameClientViewer();
-        for(var player : gameMap.getPlayerMap().values()) {
-            viewer.printMap(gameMap, player, "order");
-        }
-
     }
     void setInitUnits() {
+        var gameMapStr = jsonUtils.writeMapToJson(gameMap, null);
+        server.sendMessage(gameMapStr);
         ArrayList<String> units = server.receiveMessage();
         jsonUtils.readUnits(units, gameMap);
     }
@@ -89,7 +87,7 @@ public class GameServerController {
         var control = new GameServerController(6666,3);
         control.InitializeMap();
         control.setInitUnits();
-        control.viewer.printMap(control.gameMap, control.gameMap.getPlayerByName("3"),"order");
+
         while(!control.isGameDone()) {
             control.OneRound();
         }

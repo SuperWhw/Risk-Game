@@ -7,13 +7,13 @@ import Utilities.ColorPrint;
 
 public class GameClientViewer {
     public void printMap(GameMap map, Player player, String style) {
-        // always print own territories first
-        System.out.printf("%s player: (You)\n", player.getName());
-        System.out.print("-------------\n");
-        printOwnedTerritory(player, style);
-
-        for(var p: map.getPlayerMap().values()) if(p != player) {
-            System.out.printf("%s player: \n", p.getName());
+        for(var p: map.getPlayerMap().values()) {
+            if(p.getName() == player.getName()) {
+                System.out.printf("%s player: (You)\n", player.getName());
+            }
+            else {
+                System.out.printf("%s player: \n", p.getName());
+            }
             System.out.print("-------------\n");
             printOwnedTerritory(p, style);
         }

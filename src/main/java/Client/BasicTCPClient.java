@@ -20,7 +20,7 @@ public class BasicTCPClient {
     public void buildConnection() {
         try {
             var sock = new Socket(hostname, PORT);
-            thread  = new tcpIOHandlerThread(sock);
+            this.thread  = new tcpIOHandlerThread(sock);
         }
         catch (IOException e) {
             System.out.println("Client Socket connect failed");
@@ -29,6 +29,7 @@ public class BasicTCPClient {
 
     public void sendMessage(String output) {
         try {
+            output = output + '\n';
             thread.sendMessage(output);
         }
         catch (IOException e) {

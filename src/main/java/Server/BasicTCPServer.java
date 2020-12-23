@@ -36,6 +36,7 @@ public class BasicTCPServer {
 
     public void sendMessage(String input) {
         try {
+            input = input + '\n';
             for (var thread : this.threads) {
                 thread.sendMessage(input);
             }
@@ -55,22 +56,22 @@ public class BasicTCPServer {
     public ArrayList<String> receiveMessage() {
         try {
             for (var thread : this.threads) {
+                System.err.println("thread: " + thread.getName());
                 readBuffer.add(thread.receiveMessage());
             }
-            /*
+            System.err.println("1");
             for (var thread : this.threads) {
                 thread.join();
             }
-            */
+
         }
         catch(IOException e) {
             System.out.println("Send Message IO Failure");
         }
-        /*
         catch(InterruptedException e) {
             System.out.println("Send Message interrupted");
         }
-        */
+        System.err.println("2");
         return readBuffer;
     }
 
