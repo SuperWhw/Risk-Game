@@ -50,6 +50,7 @@ public class GameJsonUtils {
         public String name;
         public ArrayList<String> territories;
         public ArrayList<Integer> units;
+
         public PlayerJsonAdaptor(Player player) {
             this.name = player.getName();
             territories = new ArrayList<String>();
@@ -59,11 +60,13 @@ public class GameJsonUtils {
                 this.units.add(territory.getUnits());
             }
         }
+
         public void updateMap(GameMap gameMap) {
             for(int i = 0; i < territories.size(); ++i) {
                 gameMap.getTerritoryByName(territories.get(i)).setUnits(units.get(i));
             }
         }
+
         public void print() {
             System.out.println("Player\nname : " + this.name + '\n' + "territories: " + this.territories);
         }
@@ -114,7 +117,7 @@ public class GameJsonUtils {
             this.territorySet = new ArrayList<TerritoryJsonAdaptor>();
             this.territoryGroup = new ArrayList<ArrayList<String>>();
 
-            // no need to initialize player in the beginning, map.jason doesn't contain that
+            // no need to initialize player in the beginning, map.json doesn't contain that
             if(withPlayerInfo && !gameMap.getPlayerMap().isEmpty()) {
                 this.players = new ArrayList<String>();
                 for (var player : gameMap.getPlayerMap().values()) {
@@ -174,8 +177,9 @@ public class GameJsonUtils {
                         add(gameMap.getTerritoryByName(neighbor));
                     }
                 }});
+
                 // this is used without territoryGroup
-                if(this.territoryGroup.size() == 0 || this.territoryGroup == null) {
+                if(this.territoryGroup.size() == 0) {
                     gameMap.getTerritoryByName(adaptor.aliasName).
                             setOwner(gameMap.getPlayerByName(adaptor.owner));
                 }

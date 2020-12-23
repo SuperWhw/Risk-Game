@@ -18,6 +18,7 @@ public class GameServerController {
     GameJsonUtils jsonUtils;
     GameClientViewer viewer;
     OrderHandler handler;
+
     GameServerController(int port, int playerNum) {
         printer = new ColorPrint();
         fileIO = new FileIOBasics();
@@ -50,7 +51,7 @@ public class GameServerController {
 
         // create n players
         var players = server.receiveMessage();
-        var playerList = new ArrayList<Player>();
+        ArrayList<Player> playerList = new ArrayList<>();
         for(var player : players) {
             playerList.add(new Player(player));
         }
