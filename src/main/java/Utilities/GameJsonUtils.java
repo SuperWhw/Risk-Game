@@ -205,6 +205,8 @@ public class GameJsonUtils {
                 var t = gameMap.getTerritoryByName(adaptor.aliasName);
                 t.setUnits(adaptor.units);
                 t.setOwner(gameMap.getPlayerByName(adaptor.owner));
+                t.setMoveLock(false);
+                t.setAttackLock(false);
             }
         }
 

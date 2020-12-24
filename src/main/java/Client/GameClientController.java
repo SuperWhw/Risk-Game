@@ -30,6 +30,7 @@ public class GameClientController {
         scanner = new Scanner(System.in);
         checker = new CheckHelper();
         handler = new OrderHandler();
+        gsu = new GameStringUtils();
         client = new BasicTCPClient(port, ipv4, hostname);
         client.buildConnection();
     }
@@ -99,7 +100,7 @@ public class GameClientController {
                 if(in.equals("commit")) break;
                 OrderBasic order = gsu.strToOrder(gameMap, in, own);
                 handler.execute(gameMap, order);
-                orderList.add(order); // where?
+                orderList.add(order);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number format!");
             } catch (Exception e) {
@@ -107,13 +108,22 @@ public class GameClientController {
             }
             System.out.println();
         }
+
+        // print order
+        System.out.println("You order is: ");
+        for(var order: orderList) {
+            System.out.printf("%s %d units from %s to %s\n",order.getOrderType(),order.getUnits(),order.getFromT().getName(),order.getToT().getName());
+        }
+        System.out.println();
+
+        // send order list
         String orderStr = jsonUtils.writeOrderListToJson(orderList);
         client.sendMessage(orderStr);
     }
 
     boolean isGameDone(){
         if(own.getTerritories().size() == gameMap.getTerritoryMap().size()) {
-            System.out.println("Congras, you win!");
+            System.out.println("Congrats, you win!");
             return true;
         }
         else if (own.getTerritories().size() == 0) {

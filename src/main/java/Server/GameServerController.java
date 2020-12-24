@@ -78,11 +78,25 @@ public class GameServerController {
         }
         var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
         server.sendMessage(gameMapStr);
+
         ArrayList<String> orders = server.receiveMessage();
+        // print order
+        System.out.println("order is: ");
+        for(var order: orders) {
+            System.out.println(order);
+        }
         var orderList = new ArrayList<OrderBasic>();
         for(var str : orders) {
             orderList.addAll(jsonUtils.readJsonToOrderList(str, gameMap));
         }
+
+        // print order
+        System.out.println("You order is: ");
+        for(var order: orderList) {
+            System.out.printf("%s %d units from %s to %s\n",order.getOrderType(),order.getUnits(),order.getFromT().getName(),order.getToT().getName());
+        }
+        System.out.println();
+
         handler.execute(gameMap, orderList);
         //handler.addOne(gameMap)
     }
