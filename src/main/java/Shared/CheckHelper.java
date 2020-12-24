@@ -27,12 +27,19 @@ public class CheckHelper {
         try {
             int sum = 0;
             for(var str: strArray) {
-                sum += Integer.parseInt(str);
+                int unit = Integer.parseInt(str);
+                if(unit < 0) {
+                    System.out.println("Unit should be positive!");
+                    return false;
+                }
+                sum += unit;
             }
             if(sum == totalUnits) return true;
+            else {
+                System.out.printf("Total units are not equal to %d!\n", totalUnits);
+            }
         } catch (NumberFormatException e) {
             System.out.println("Invalid number format!");
-            return false;
         }
         return false;
     }

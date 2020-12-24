@@ -11,31 +11,12 @@ public class Territory {
     private boolean moveLock;
     private boolean attackLock;
 
-    public Territory(String name, String aliasName) {
-        this.territoryName = name;
-        this.aliasName = aliasName;
-        this.neighbors = new HashSet<>();
-        moveLock = false;
-        attackLock = false;
-    }
-
-    public Territory(String name, String aliasName, Player owner) {
-        this.territoryName = name;
-        this.aliasName = aliasName;
-        this.neighbors = new HashSet<>();
-        this.territoryOwner = owner;
-        owner.addTerritory(this);
-        moveLock = false;
-        attackLock = false;
-    }
-
     public Territory(String name, String aliasName, int units, Player owner) {
         this.territoryName = name;
         this.aliasName = aliasName;
         this.neighbors = new HashSet<>();
         this.territoryUnits = units;
         this.territoryOwner = owner;
-        if(owner != null) owner.addTerritory(this);
         moveLock = false;
         attackLock = false;
     }

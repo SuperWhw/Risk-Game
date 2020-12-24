@@ -5,7 +5,6 @@ import java.util.HashSet;
 public class Player {
     private String playerName;
     private HashSet<Territory> territories;
-    private LinkInfo link_info;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -29,7 +28,7 @@ public class Player {
             territories.remove(t);
         }
         catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Cannot remove territory!");
         }
     }
 

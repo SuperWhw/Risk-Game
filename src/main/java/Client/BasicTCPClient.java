@@ -29,8 +29,7 @@ public class BasicTCPClient {
 
     public void sendMessage(String output) {
         try {
-            output = output + '\n';
-            thread.sendMessage(output);
+            thread.sendMessage(output + '\n');
         }
         catch (IOException e) {
             System.out.println("Send Message failed, maybe server is not working");

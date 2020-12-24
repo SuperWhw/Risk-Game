@@ -36,9 +36,8 @@ public class BasicTCPServer {
 
     public void sendMessage(String input) {
         try {
-            input = input + '\n';
             for (var thread : this.threads) {
-                thread.sendMessage(input);
+                thread.sendMessage(input + '\n');
             }
             for (var thread : this.threads) {
                 thread.join();

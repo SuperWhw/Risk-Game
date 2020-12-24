@@ -41,7 +41,6 @@ public class GameClientController {
             name = scanner.nextLine();
         } while(!checker.checkName(name));
         client.sendMessage(name);
-        System.out.println(name + " is sent");
 
         //build player
         own = new Player(name);
@@ -49,13 +48,12 @@ public class GameClientController {
 
     void InitializeMap() {
         // receive map
-        System.out.println(1);
         String MapStr = client.receiveMessage();
-        System.out.println(MapStr);
+        // System.out.println(MapStr);
         gameMap = jsonUtils.readJsonToGameMap(MapStr, null);
-        System.out.println(2);
+        System.out.println("This is the original map: \n");
         viewer.printMap(gameMap, own, "simple");
-
+        System.out.println("Please input initial units for your each territory: ");
 
         int initUnits = gameMap.getInitUnits();
         var territoryList = gameMap.getPlayerByName(own.getName()).getTerritories();
@@ -68,9 +66,17 @@ public class GameClientController {
         // update territory
         int index = 0;
         for(var t: territoryList) {
-            t.setUnits(Integer.parseInt(strArray[index]));
-            own.addTerritory(t);
+            int unit = Integer.parseInt(strArray[index++]);
+            Territory newt = new Territory(t.getName(),t.getAliasName(),unit,own);
+            own.addTerritory(newt);
         }
+
+        System.out.println("Now you have: ");
+        for(var t: own.getTerritories()) {
+            System.out.print(t.getName() + ' ');
+            System.out.println(t.getUnits());
+        }
+
 
         // send player to server
         String ownStr = jsonUtils.writeUnits(own);
