@@ -51,7 +51,6 @@ public class GameServerController {
         server.sendMessage("Hello this is your host, please input your name:");
 
         // create n players
-        System.out.println("start receive");
         var players = server.receiveMessage();
         System.out.println("Message received " + players);
         ArrayList<Player> playerList = new ArrayList<>();
@@ -67,8 +66,9 @@ public class GameServerController {
     void setInitUnits() {
         var gameMapStr = jsonUtils.writeMapToJson(gameMap, null);
         server.sendMessage(gameMapStr);
-        ArrayList<String> units = server.receiveMessage();
-        jsonUtils.readUnits(units, gameMap);
+        ArrayList<String> playerWithUnits = server.receiveMessage();
+        System.out.println("units received " + playerWithUnits);
+        jsonUtils.readUnits(playerWithUnits, gameMap);
     }
 
     void OneRound() {

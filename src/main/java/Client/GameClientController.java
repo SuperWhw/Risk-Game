@@ -80,6 +80,7 @@ public class GameClientController {
 
         // send player to server
         String ownStr = jsonUtils.writeUnits(own);
+        System.out.println(ownStr);
         client.sendMessage(ownStr);
     }
 

@@ -34,7 +34,6 @@ public class tcpIOHandlerThread extends Thread {
     }
 
     public String receiveMessage() throws IOException {
-        System.err.println("readline1");
         return reader.readLine();
     }
 

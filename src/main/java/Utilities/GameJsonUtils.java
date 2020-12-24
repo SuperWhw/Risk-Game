@@ -293,6 +293,7 @@ public class GameJsonUtils {
     public void readUnits(ArrayList<String> TerritoryWithUnitsStr, GameMap gameMap) {
         Gson gson = new Gson();
         for(String jsonStr : TerritoryWithUnitsStr) {
+            System.out.println(jsonStr);
             var adaptor = gson.fromJson(jsonStr, PlayerJsonAdaptor.class);
             adaptor.updateMap(gameMap);
         }
@@ -326,15 +327,28 @@ public class GameJsonUtils {
 
         var p1 = gameMap1.getPlayerByName("pabc");
 
+        var p2 = gameMap1.getPlayerByName("pls");
+
+        var p3 = gameMap1.getPlayerByName("ple");
+
         for(Territory territory : p1.getTerritories()) {
             territory.setUnits(13);
         }
+        for(Territory territory : p2.getTerritories()) {
+            territory.setUnits(14);
+        }
+        for(Territory territory : p3.getTerritories()) {
+            territory.setUnits(15);
+        }
 
-        var Str = jsonUtil.writeUnits(p1);
+        var Str1 = jsonUtil.writeUnits(p1);
+        var Str2 = jsonUtil.writeUnits(p2);
+        var Str3 = jsonUtil.writeUnits(p3);
         ArrayList<String> strs = new ArrayList<String>();
-        strs.add(Str);
+        strs.add(Str1);
+        strs.add(Str2);
+        strs.add(Str3);
         jsonUtil.readUnits(strs, gameMap);
-
         viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
 
     }

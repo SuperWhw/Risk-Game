@@ -54,11 +54,10 @@ public class BasicTCPServer {
 
     public ArrayList<String> receiveMessage() {
         try {
+            readBuffer.clear();
             for (var thread : this.threads) {
-                System.err.println("thread: " + thread.getName());
                 readBuffer.add(thread.receiveMessage());
             }
-            System.err.println("1");
             for (var thread : this.threads) {
                 thread.join();
             }
