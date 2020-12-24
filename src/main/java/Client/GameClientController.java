@@ -86,7 +86,8 @@ public class GameClientController {
 
     void OneRound() {
         String MapStr = client.receiveMessage();
-        gameMap = jsonUtils.readJsonToGameMap(MapStr, null); // TODO: updates?
+        System.out.println("received map is " + MapStr);
+        jsonUtils.updateMap(MapStr, gameMap);
 
         ArrayList<OrderBasic> orderList = new ArrayList<>();
         String in;

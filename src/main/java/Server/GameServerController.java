@@ -72,6 +72,10 @@ public class GameServerController {
     }
 
     void OneRound() {
+        for(var player : gameMap.getPlayerMap().values()) {
+            viewer.printMap(gameMap, player, "order");
+            break;
+        }
         var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
         server.sendMessage(gameMapStr);
         ArrayList<String> orders = server.receiveMessage();

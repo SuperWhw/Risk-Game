@@ -278,6 +278,12 @@ public class GameJsonUtils {
         return adaptor.toGameMap(players);
     }
 
+    public void updateMap(String mapJson, GameMap gameMap) {
+        Gson gson = new Gson();
+        GameMapJsonAdaptor adaptor = gson.fromJson(mapJson, GameMapJsonAdaptor.class);
+        adaptor.updateMap(gameMap);
+    }
+
     public String writeOrderListToJson(ArrayList<OrderBasic> orders) {
         Gson gson = new Gson();
         OrderBasicListJsonAdapter adaptor = new OrderBasicListJsonAdapter(orders);
