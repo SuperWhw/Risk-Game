@@ -1,16 +1,15 @@
 package Utilities;
-import Client.GameClientViewer;
+import Client.*;
+import Client.OrderHandler;
 import Shared.*;
+import Server.*;
 import com.google.gson.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.HashMap;
 import java.lang.*;
-import java.util.Map;
+
 
 /*
     Here is the class than transform between Player/Territory/OrderBasic and JsonStr
@@ -228,14 +227,32 @@ public class GameJsonUtils {
         }
 
         public Object toOrderBasic(GameMap gameMap) {
-            if (this.type.equals("MoveOrder") || this.type.equals("AttackOrder")) {
+            if (this.type.equals("Move") || this.type.equals("Attack")) {
                 try {
-                    return Class.forName(this.type).getDeclaredConstructor().newInstance(
-                            null, this.type,
+                    Class a = Class.forName("Shared." + this.type + "Order");
+                    Class[] classes = new Class[] {Player.class, String.class, Territory.class, Territory.class, int.class};
+                    return a.getDeclaredConstructor(classes).newInstance(
+                            gameMap.getPlayerByName(this.player), this.type,
                             gameMap.getTerritoryByName(this.fromT),
                             gameMap.getTerritoryByName(this.toT), this.units);
-                } catch (Exception e) {
-                    System.out.println("Class: " + this.type + " create failure");
+                }
+                catch (ClassNotFoundException e) {
+                    System.out.println("Class: " + this.type + " not found");
+                }
+                catch (NoSuchMethodException e) {
+                    System.out.println("Class: " + this.type + " no such method");
+                }
+                catch (InstantiationException e) {
+                    System.out.println("Class: " + this.type + " instantiation exception");
+                }
+                catch (IllegalAccessException e) {
+                    System.out.println("Class: " + this.type + " illegal-access exception");
+                }
+                catch (IllegalArgumentException e) {
+                    System.out.println("Class: " + this.type + " illegal-argument exception");
+                }
+                catch (InvocationTargetException e) {
+                    System.out.println("Class: " + this.type + " illegal-argument exception");
                 }
             }
             return null;
@@ -359,5 +376,19 @@ public class GameJsonUtils {
         jsonUtil.readUnits(strs, gameMap);
         viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
 
+        // here is the order test
+        MoveOrder m = new MoveOrder(p1, "Move", gameMap.getTerritoryByName("N"), gameMap.getTerritoryByName("O"), 6);
+        AttackOrder a = new AttackOrder(p1, "Attack", gameMap.getTerritoryByName("O"), gameMap.getTerritoryByName("Mi"), 14);
+        var orders = new ArrayList<OrderBasic>();
+        orders.add(m);
+        orders.add(a);
+        String orderStr = jsonUtil.writeOrderListToJson(orders);
+        System.out.println("orderStr: " + orderStr);
+        var orderListAfter = jsonUtil.readJsonToOrderList(orderStr,gameMap);
+        var handler = new OrderHandler();
+        for(var order: orderListAfter) {
+            handler.execute(gameMap, order);
+        }
+        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
     }
 }
