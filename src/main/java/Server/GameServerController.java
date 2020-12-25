@@ -81,7 +81,7 @@ public class GameServerController {
 
         ArrayList<String> orders = server.receiveMessage();
         // print order
-        System.out.println("order is: ");
+        System.out.println("orderStr is: ");
         for(var order: orders) {
             System.out.println(order);
         }
@@ -91,7 +91,7 @@ public class GameServerController {
         }
 
         // print order
-        System.out.println("You order is: ");
+        System.out.println("order is: ");
         for(var order: orderList) {
             System.out.printf("%s %d units from %s to %s\n",order.getOrderType(),order.getUnits(),order.getFromT().getName(),order.getToT().getName());
         }

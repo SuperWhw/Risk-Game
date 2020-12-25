@@ -42,6 +42,7 @@ public class GameClientController {
             name = scanner.nextLine();
         } while(!checker.checkName(name));
         client.sendMessage(name);
+        System.out.println("Waiting for other players...");
 
         //build player
         own = new Player(name);
@@ -52,7 +53,7 @@ public class GameClientController {
         String MapStr = client.receiveMessage();
         // System.out.println(MapStr);
         gameMap = jsonUtils.readJsonToGameMap(MapStr, null);
-        System.out.println("This is the original map: \n");
+        System.out.println("\nThis is the original map: \n");
         viewer.printMap(gameMap, own, "simple");
         System.out.println("Please input initial units for your each territory: ");
 
@@ -72,73 +73,93 @@ public class GameClientController {
             own.addTerritory(newt);
         }
 
+        /* For test
         System.out.println("Now you have: ");
         for(var t: own.getTerritories()) {
             System.out.print(t.getName() + ' ');
             System.out.println(t.getUnits());
         }
-
+        */
 
         // send player to server
         String ownStr = jsonUtils.writeUnits(own);
-        System.out.println(ownStr);
         client.sendMessage(ownStr);
+        System.out.println("Waiting for other players...");
     }
 
-    void OneRound() {
+    int OneRound(int round) {
         String MapStr = client.receiveMessage();
-        System.out.println("received map is " + MapStr);
         jsonUtils.updateMap(MapStr, gameMap);
+        own = gameMap.getPlayerByName(own.getName());
 
+        System.out.printf("\n>>>>>>>>>>>>>>>>>>>>> Round %d <<<<<<<<<<<<<<<<<<<<<\n\n",round);
+        int status = getStatus();
         ArrayList<OrderBasic> orderList = new ArrayList<>();
-        String in;
-        while(true) {
-            try {
-                viewer.printMap(gameMap, own, "order");
-                System.out.println("Please input order: ");
-                in = scanner.nextLine();
-                if(in.equals("commit")) break;
-                OrderBasic order = gsu.strToOrder(gameMap, in, own);
-                handler.execute(gameMap, order);
-                orderList.add(order);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format!");
-            } catch (Exception e) {
+        if(status == 0) {
+            String in;
+            while (true) {
+                try {
+                    viewer.printMap(gameMap, own, "order");
+                    System.out.println("Please input order: ");
+                    in = scanner.nextLine();
+                    if (in.equals("commit")) break;
+                    OrderBasic order = gsu.strToOrder(gameMap, in, own);
+                    handler.execute(gameMap, order);
+                    orderList.add(order);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number format!");
+                } catch (Exception e) {
+                    System.out.println();
+                }
                 System.out.println();
             }
-            System.out.println();
-        }
 
-        // print order
-        System.out.println("You order is: ");
-        for(var order: orderList) {
-            System.out.printf("%s %d units from %s to %s\n",order.getOrderType(),order.getUnits(),order.getFromT().getName(),order.getToT().getName());
+            // print order
+            System.out.println("You order is: ");
+            for (var order : orderList) {
+                System.out.printf("%s %d units from %s to %s\n", order.getOrderType(), order.getUnits(), order.getFromT().getName(), order.getToT().getName());
+            }
+            System.out.println();
+
+
         }
-        System.out.println();
+        else if(status == -1){
+            System.out.println("You are watching the game: ");
+            viewer.printMap(gameMap, own, "order");
+        }
+        else {
+            return status;
+        }
 
         // send order list
         String orderStr = jsonUtils.writeOrderListToJson(orderList);
         client.sendMessage(orderStr);
+
+        System.out.println("Waiting for other players...");
+        return status;
     }
 
-    boolean isGameDone(){
+    int getStatus(){
         if(own.getTerritories().size() == gameMap.getTerritoryMap().size()) {
             System.out.println("Congrats, you win!");
-            return true;
+            return 1;
         }
         else if (own.getTerritories().size() == 0) {
-            System.out.println("Sorry, you lose!");
+            System.out.print("Sorry, you lose! ");
+            return -1;
         }
-        return false;
+        return 0;
     }
 
     public static void main(String[] args) {
         var control = new GameClientController(6666, "127.0.0.1", "localhost");
         control.setName();
         control.InitializeMap();
-        while(!control.isGameDone()) {
-            control.OneRound();
-        }
 
+        int round = 1, status = 0;
+        while(status != 1) {
+            status = control.OneRound(round++);
+        }
+        control.client.end();
     }
 }
