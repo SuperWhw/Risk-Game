@@ -81,14 +81,17 @@ public class GameServerController {
             }
         }
     }
-
+    void sendMap() {
+        var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
+        server.sendMessage(gameMapStr);
+    }
     void OneRound() {
         for(var player : gameMap.getPlayerMap().values()) {
             viewer.printMap(gameMap, player, "order");
             break;
         }
-        var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
-        server.sendMessage(gameMapStr);
+
+        sendMap();
 
         ArrayList<String> orders = server.receiveMessage();
         // print order
@@ -122,6 +125,7 @@ public class GameServerController {
         while(!control.isGameDone()) {
             control.OneRound();
         }
+        control.sendMap();
 
     }
 
