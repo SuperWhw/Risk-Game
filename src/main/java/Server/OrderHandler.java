@@ -8,6 +8,12 @@ import java.util.Random;
 
 public class OrderHandler {
 
+    public void addOne(GameMap map) {
+        for(var territory : map.getTerritoryMap().values()) {
+            territory.setUnits(territory.getUnits() + 1);
+        }
+    }
+
     public void execute(GameMap map, ArrayList<OrderBasic> orderList) {
 
         ArrayList<MoveOrder> moveList = new ArrayList<>();

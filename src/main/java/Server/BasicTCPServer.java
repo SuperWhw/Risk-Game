@@ -44,7 +44,7 @@ public class BasicTCPServer {
             }
         }
         catch(IOException e) {
-            System.out.println("Send Message IO Failure");
+            System.out.println("Send Message Failure");
         }
         catch(InterruptedException e) {
             System.out.println("Send Message interrupted");
@@ -64,12 +64,11 @@ public class BasicTCPServer {
 
         }
         catch(IOException e) {
-            System.out.println("Send Message IO Failure");
+            System.out.println("Receive Message IO Failure");
         }
         catch(InterruptedException e) {
-            System.out.println("Send Message interrupted");
+            System.out.println("Receive Message interrupted");
         }
-        System.err.println("2");
         return readBuffer;
     }
 

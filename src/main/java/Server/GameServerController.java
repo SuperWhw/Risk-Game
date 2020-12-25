@@ -69,6 +69,17 @@ public class GameServerController {
         ArrayList<String> playerWithUnits = server.receiveMessage();
         System.out.println("units received " + playerWithUnits);
         jsonUtils.readUnits(playerWithUnits, gameMap);
+        for(var player : gameMap.getPlayerMap().values()) {
+            boolean isNull = true;
+            for(var territory : player.getTerritories()) {
+                isNull &= (territory.getUnits() == 0);
+            }
+            if(isNull) {
+                for(var territory : player.getTerritories()) {
+                    territory.setUnits(gameMap.getInitUnits()/3);
+                }
+            }
+        }
     }
 
     void OneRound() {
@@ -87,7 +98,9 @@ public class GameServerController {
         }
         var orderList = new ArrayList<OrderBasic>();
         for(var str : orders) {
-            orderList.addAll(jsonUtils.readJsonToOrderList(str, gameMap));
+            var orderBasic = jsonUtils.readJsonToOrderList(str, gameMap);
+            if(orderBasic != null)
+                orderList.addAll(orderBasic);
         }
 
         // print order
@@ -98,7 +111,7 @@ public class GameServerController {
         System.out.println();
 
         handler.execute(gameMap, orderList);
-        //handler.addOne(gameMap)
+        handler.addOne(gameMap);
     }
 
     public static void main(String[] args) throws IOException {

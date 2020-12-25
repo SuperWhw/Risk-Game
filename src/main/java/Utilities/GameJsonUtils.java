@@ -312,6 +312,7 @@ public class GameJsonUtils {
         if(mapJson == null) return;
         Gson gson = new Gson();
         GameMapJsonAdaptor adaptor = gson.fromJson(mapJson, GameMapJsonAdaptor.class);
+        if(adaptor == null) return;
         adaptor.updateMap(gameMap);
     }
 
@@ -331,7 +332,7 @@ public class GameJsonUtils {
     public void readUnits(ArrayList<String> TerritoryWithUnitsStr, GameMap gameMap) {
         Gson gson = new Gson();
         for(String jsonStr : TerritoryWithUnitsStr) {
-            if(jsonStr == null) continue;
+            if(jsonStr == null) return;
             var adaptor = gson.fromJson(jsonStr, PlayerJsonAdaptor.class);
             adaptor.updateMap(gameMap);
         }
