@@ -16,7 +16,7 @@ public class AttackOrder extends OrderBasic {
     @Override
     public void execute() {
         int att_units = units, def_units = toT.getUnits();
-        Player attacker = getPlayer(), defender = toT.getOwner();
+        Player attacker = this.getPlayer(), defender = toT.getOwner();
         while(att_units > 0 && def_units > 0) {
 //            int attNum = rollDice(1, 20);
 //            int defNum = rollDice(1, 20);
@@ -40,7 +40,8 @@ public class AttackOrder extends OrderBasic {
         }
         if(att_units > 0) {  // attacker wins
             toT.setUnits(att_units);
-            toT.setOwner(getPlayer());
+            System.out.println("set " + toT.getName() + "'s owner to " + attacker.getName());
+            toT.setOwner(attacker);
         }
         else {  //defender wins
             toT.setUnits(def_units);

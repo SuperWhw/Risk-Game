@@ -5,6 +5,7 @@ import Shared.*;
 import Server.*;
 import com.google.gson.*;
 
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -198,7 +199,7 @@ public class GameJsonUtils {
         }
 
         public void updateMap(GameMap gameMap) {
-
+            if(gameMap == null) return;
             //update territory and its owner
             for(var adaptor : territorySet) {
                 var t = gameMap.getTerritoryByName(adaptor.aliasName);
@@ -227,9 +228,10 @@ public class GameJsonUtils {
         }
 
         public Object toOrderBasic(GameMap gameMap) {
-            if (this.type.equals("Move") || this.type.equals("Attack")) {
+            String name = this.type.substring(0, 1).toUpperCase() + this.type.substring(1);
+            if (this.type.equals("move") || this.type.equals("attack")) {
                 try {
-                    Class a = Class.forName("Shared." + this.type + "Order");
+                    Class a = Class.forName("Shared." + name + "Order");
                     Class[] classes = new Class[] {Player.class, String.class, Territory.class, Territory.class, int.class};
                     return a.getDeclaredConstructor(classes).newInstance(
                             gameMap.getPlayerByName(this.player), this.type,
@@ -257,6 +259,9 @@ public class GameJsonUtils {
             }
             return null;
         }
+        public void print() {
+            System.out.println("player: " + player + " from " + fromT + " to " +  toT + " units " + units + " type " +  type);
+        }
     }
 
     class OrderBasicListJsonAdapter {
@@ -277,6 +282,11 @@ public class GameJsonUtils {
             }
             return orders;
         }
+        public void print() {
+            for(var adaptor : orderBasics) {
+                adaptor.print();
+            }
+        }
     }
 
     public String writeMapToJson(GameMap gameMap, ArrayList<ArrayList<Territory>> territoryGroup) {
@@ -292,12 +302,14 @@ public class GameJsonUtils {
     }
 
     public GameMap readJsonToGameMap(String mapJson, ArrayList<String> players) {
+        if(mapJson == null) return null;
         Gson gson = new Gson();
         GameMapJsonAdaptor adaptor = gson.fromJson(mapJson, GameMapJsonAdaptor.class);
         return adaptor.toGameMap(players);
     }
 
     public void updateMap(String mapJson, GameMap gameMap) {
+        if(mapJson == null) return;
         Gson gson = new Gson();
         GameMapJsonAdaptor adaptor = gson.fromJson(mapJson, GameMapJsonAdaptor.class);
         adaptor.updateMap(gameMap);
@@ -310,6 +322,7 @@ public class GameJsonUtils {
     }
 
     public ArrayList<OrderBasic> readJsonToOrderList(String ordersJson, GameMap gameMap) {
+        if(ordersJson == null) return null;
         Gson gson = new Gson();
         OrderBasicListJsonAdapter adaptor = gson.fromJson(ordersJson, OrderBasicListJsonAdapter.class);
         return adaptor.toOrderList(gameMap);
@@ -318,7 +331,7 @@ public class GameJsonUtils {
     public void readUnits(ArrayList<String> TerritoryWithUnitsStr, GameMap gameMap) {
         Gson gson = new Gson();
         for(String jsonStr : TerritoryWithUnitsStr) {
-            System.out.println(jsonStr);
+            if(jsonStr == null) continue;
             var adaptor = gson.fromJson(jsonStr, PlayerJsonAdaptor.class);
             adaptor.updateMap(gameMap);
         }
@@ -374,21 +387,26 @@ public class GameJsonUtils {
         strs.add(Str2);
         strs.add(Str3);
         jsonUtil.readUnits(strs, gameMap);
-        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
 
         // here is the order test
-        MoveOrder m = new MoveOrder(p1, "Move", gameMap.getTerritoryByName("N"), gameMap.getTerritoryByName("O"), 6);
-        AttackOrder a = new AttackOrder(p1, "Attack", gameMap.getTerritoryByName("O"), gameMap.getTerritoryByName("Mi"), 14);
+        MoveOrder m = new MoveOrder(p1, "move", gameMap.getTerritoryByName("N"),
+                gameMap.getTerritoryByName("O"), 6);
+        AttackOrder a = new AttackOrder(p1, "attack", gameMap.getTerritoryByName("O"),
+                gameMap.getTerritoryByName("S"), 16);
         var orders = new ArrayList<OrderBasic>();
         orders.add(m);
         orders.add(a);
         String orderStr = jsonUtil.writeOrderListToJson(orders);
         System.out.println("orderStr: " + orderStr);
         var orderListAfter = jsonUtil.readJsonToOrderList(orderStr,gameMap);
-        var handler = new OrderHandler();
-        for(var order: orderListAfter) {
-            handler.execute(gameMap, order);
-        }
+        var handler = new Server.OrderHandler();
+
         viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "order");
+
+        handler.execute(gameMap, orders);
+
+        viewer.printMap(gameMap, gameMap.getPlayerByName("pabc"), "simple");
+
+        System.out.println(jsonUtil.writeMapToJson(gameMap,null));
     }
 }
