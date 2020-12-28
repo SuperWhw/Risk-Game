@@ -1,12 +1,9 @@
 package Client;
 
 import Shared.*;
-import Utilities.FileIOBasics;
-import Utilities.GameJsonUtils;
 import Utilities.GameStringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -121,7 +118,7 @@ public class TestClientModel {
                 if(in.equals("commit")) break;
                 OrderBasic order = gsu.strToOrder(map, in, p1);
 
-                handler.execute(map, order);
+                handler.execute(order);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number format!");
             } catch (Exception e) {

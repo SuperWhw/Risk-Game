@@ -53,10 +53,6 @@ public class GameServerController {
         // create n players
         var players = server.receiveMessage();
         System.out.println("Message received " + players);
-        ArrayList<Player> playerList = new ArrayList<>();
-        for(var player : players) {
-            playerList.add(new Player(player));
-        }
 
         // read and load map.json
         var MapStr = fileIO.readJsonFile("map.json");
@@ -113,7 +109,7 @@ public class GameServerController {
         }
         System.out.println();
 
-        handler.execute(gameMap, orderList);
+        handler.execute(orderList);
         handler.addOne(gameMap);
     }
 

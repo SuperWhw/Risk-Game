@@ -8,13 +8,11 @@ import java.net.*;
 
 public class BasicTCPClient {
     private final int PORT;
-    private final String ipv4;
     private final String hostname;
     private tcpIOHandlerThread thread;
 
-    public BasicTCPClient(int PORT, String ipv4, String hostname) {
+    public BasicTCPClient(int PORT, String hostname) {
         this.PORT = PORT;
-        this.ipv4 = ipv4;
         this.hostname = hostname;
     }
     public void buildConnection() {

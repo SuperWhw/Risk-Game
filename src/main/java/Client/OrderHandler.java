@@ -2,13 +2,9 @@ package Client;
 
 import Shared.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
 public class OrderHandler {
 
-    public void execute(GameMap map, OrderBasic order) {
+    public void execute(OrderBasic order) {
         CheckHelper checker = new CheckHelper();
 
         if(!checker.checkOrderBasic(order)) {

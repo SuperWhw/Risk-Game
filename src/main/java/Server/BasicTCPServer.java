@@ -12,11 +12,12 @@ public class BasicTCPServer {
     private int playerNum;
     private ArrayList<tcpIOHandlerThread> threads;
     private ArrayList<String> readBuffer;
+
     public BasicTCPServer(int PORT, int playerNum) throws IOException {
         this.PORT = PORT;
         this.playerNum = playerNum;
-        this.threads = new ArrayList<tcpIOHandlerThread>();
-        this.readBuffer = new ArrayList<String>();
+        this.threads = new ArrayList<>();
+        this.readBuffer = new ArrayList<>();
     }
 
     public void CreateSockets() throws IOException {

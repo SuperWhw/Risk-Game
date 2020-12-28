@@ -100,32 +100,32 @@ public class CreateMapJsonStr {
             add(Mordor);
             add(Hogwarts);
         }});
-        ArrayList<Player> players = new ArrayList<Player>();
+        ArrayList<Player> players = new ArrayList<>();
         players.add(p1);
         players.add(p2);
         players.add(p3);
 
         // create territoryGroup
         // group 1
-        ArrayList<Territory> t1 = new ArrayList<Territory>();
+        ArrayList<Territory> t1 = new ArrayList<>();
         t1.add(Narnia);
         t1.add(Midkemia);
         t1.add(Oz);
 
         // group 2
-        ArrayList<Territory> t2 = new ArrayList<Territory>();
+        ArrayList<Territory> t2 = new ArrayList<>();
         t2.add(Gondor);
         t2.add(Mordor);
         t2.add(Hogwarts);
 
         // group 3
-        ArrayList<Territory> t3 = new ArrayList<Territory>();;
+        ArrayList<Territory> t3 = new ArrayList<>();
         t3.add(Scadrial);
         t3.add(Roshar);
         t3.add(Elantris);
 
         // combine group 1-3
-        ArrayList<ArrayList<Territory> > territoryGroup = new ArrayList<ArrayList<Territory> >();
+        ArrayList<ArrayList<Territory> > territoryGroup = new ArrayList<>();
         territoryGroup.add(t1);
         territoryGroup.add(t2);
         territoryGroup.add(t3);

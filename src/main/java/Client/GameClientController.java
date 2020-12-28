@@ -22,7 +22,7 @@ public class GameClientController {
     OrderHandler handler;
     CheckHelper checker;
 
-    GameClientController (int port, String ipv4, String hostname) {
+    GameClientController (int port, String hostname) {
         printer = new ColorPrint();
         fileIO = new FileIOBasics();
         jsonUtils = new GameJsonUtils();
@@ -31,13 +31,13 @@ public class GameClientController {
         checker = new CheckHelper();
         handler = new OrderHandler();
         gsu = new GameStringUtils();
-        client = new BasicTCPClient(port, ipv4, hostname);
+        client = new BasicTCPClient(port, hostname);
         client.buildConnection();
     }
 
     void setName() {
         System.out.println(client.receiveMessage());
-        String name = "";
+        String name;
         do {
             name = scanner.nextLine();
         } while(!checker.checkName(name));
@@ -59,7 +59,7 @@ public class GameClientController {
 
         int initUnits = gameMap.getInitUnits();
         var territoryList = gameMap.getPlayerByName(own.getName()).getTerritories();
-        String initUnitsList = "";
+        String initUnitsList;
         do {
             initUnitsList = scanner.nextLine();
         } while(!checker.checkInitUnitsList(initUnitsList,initUnits,territoryList.size()));
@@ -104,7 +104,7 @@ public class GameClientController {
                     in = scanner.nextLine();
                     if (in.equals("commit")) break;
                     OrderBasic order = gsu.strToOrder(gameMap, in, own);
-                    handler.execute(gameMap, order);
+                    handler.execute(order);
                     orderList.add(order);
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid number format!");
@@ -152,7 +152,8 @@ public class GameClientController {
     }
 
     public static void main(String[] args) {
-        var control = new GameClientController(6666, "127.0.0.1", "localhost");
+        // 32861 36376tg150.zicp.vip
+        var control = new GameClientController(6666, "localhost");
         control.setName();
         control.InitializeMap();
 

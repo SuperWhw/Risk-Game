@@ -1,9 +1,7 @@
 package Shared;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class GameMap {
     private HashMap<String, Territory> territoryMap;
@@ -32,10 +30,6 @@ public class GameMap {
 
     public HashMap<String, Player> getPlayerMap() {
         return this.playerMap;
-    }
-
-    public String getFullName(String aliasName) {
-        return this.territoryMap.get(aliasName).getName();
     }
 
     public HashMap<String, Territory> getTerritoryMap() {

@@ -14,7 +14,7 @@ public class OrderHandler {
         }
     }
 
-    public void execute(GameMap map, ArrayList<OrderBasic> orderList) {
+    public void execute(ArrayList<OrderBasic> orderList) {
 
         ArrayList<MoveOrder> moveList = new ArrayList<>();
         ArrayList<AttackOrder> attackList = new ArrayList<>();
@@ -39,7 +39,7 @@ public class OrderHandler {
         // execute move and 1st step of attack
         for(var order: moveList) order.execute();
 
-        //execute attack;
+        //execute attack
         for(var order: attackList) order.execute();
 
     }

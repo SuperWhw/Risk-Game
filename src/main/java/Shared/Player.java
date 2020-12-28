@@ -8,7 +8,7 @@ public class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
-        this.territories = new HashSet<Territory>();
+        this.territories = new HashSet<>();
     }
 
     public String getName() {
