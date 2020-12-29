@@ -36,37 +36,35 @@ public class BasicTCPServer {
     }
 
     public void sendMessage(String input) {
-        for (var thread : this.threads) {
-            try {
+        try {
+            for (var thread : this.threads) {
                 thread.sendMessage(input + '\n');
             }
-            catch(IOException e) {
-                System.out.println("Send Message Failure");
-            }
-            finally {
-                thread.end();
-            }
-        }
-        for (var thread : this.threads) {
-            try {
+            for (var thread : this.threads) {
                 thread.join();
             }
-            catch(InterruptedException e) {
-                System.out.println("Send Message interrupted");
-            }
+        }
+        catch(IOException e) {
+            System.out.println("Send Message Failure");
+        }
+        catch(InterruptedException e) {
+            System.out.println("Send Message interrupted");
         }
     }
 
     public ArrayList<String> receiveMessage() {
+        readBuffer.clear();
         try {
-            readBuffer.clear();
             for (var thread : this.threads) {
+                System.out.println("receiving thread " + thread.getName());
                 readBuffer.add(thread.receiveMessage());
-            }
-            for (var thread : this.threads) {
                 thread.join();
             }
 
+            for (var thread : this.threads) {
+
+                thread.join();
+            }
         }
         catch(IOException e) {
             System.out.println("Receive Message IO Failure");
