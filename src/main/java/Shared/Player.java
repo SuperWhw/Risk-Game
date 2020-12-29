@@ -1,15 +1,14 @@
-package Client;
+package Shared;
 
 import java.util.HashSet;
 
 public class Player {
     private String playerName;
     private HashSet<Territory> territories;
-    private LinkInfo link_info;
 
     public Player(String playerName) {
         this.playerName = playerName;
-        this.territories = new HashSet<Territory>();
+        this.territories = new HashSet<>();
     }
 
     public String getName() {
@@ -29,7 +28,7 @@ public class Player {
             territories.remove(t);
         }
         catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Cannot remove territory!");
         }
     }
 

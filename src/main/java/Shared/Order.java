@@ -1,4 +1,4 @@
-package Client;
+package Shared;
 
 public abstract class Order {
     protected Player player;

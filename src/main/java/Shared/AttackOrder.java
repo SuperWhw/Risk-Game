@@ -1,4 +1,4 @@
-package Client;
+package Shared;
 
 import java.util.Random;
 
@@ -16,14 +16,14 @@ public class AttackOrder extends OrderBasic {
     @Override
     public void execute() {
         int att_units = units, def_units = toT.getUnits();
-        Player attacker = getPlayer(), defender = toT.getOwner();
+        Player attacker = this.getPlayer(), defender = toT.getOwner();
         while(att_units > 0 && def_units > 0) {
-//            int attNum = rollDice(1, 20);
-//            int defNum = rollDice(1, 20);
-//            if (attNum > defNum) def_units--;
-//            else att_units--;
+            int attNum = rollDice(1, 20);
+            int defNum = rollDice(1, 20);
+            if (attNum > defNum) def_units--;
+            else att_units--;
 
-            // for accurate testing, we don't use random number now
+            /* For accurate testing, we don't use random number
             if (att_units > def_units) {
                 att_units -= def_units;
                 def_units = 0;
@@ -36,13 +36,12 @@ public class AttackOrder extends OrderBasic {
                 def_units = 1;
                 att_units = 0;
             }
-            // ------------------------------------------------------
+            */
+
         }
         if(att_units > 0) {  // attacker wins
             toT.setUnits(att_units);
-            toT.setOwner(getPlayer());
-            attacker.addTerritory(toT);
-            defender.removeTerritory(toT);
+            toT.setOwner(attacker);
         }
         else {  //defender wins
             toT.setUnits(def_units);

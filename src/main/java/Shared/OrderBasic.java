@@ -1,8 +1,7 @@
-package Client;
+package Shared;
 
 public abstract class OrderBasic extends Order {
     protected Player player;
-    protected String orderType;
     protected Territory fromT;
     protected Territory toT;
     protected int units;

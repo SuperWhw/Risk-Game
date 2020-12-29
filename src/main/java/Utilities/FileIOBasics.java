@@ -1,5 +1,6 @@
 package Utilities;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class FileIOBasics {
 
@@ -17,9 +18,9 @@ public class FileIOBasics {
     public String readJsonFile(String filename) {
         try {
             FileReader fr = new FileReader(filename);
-            Reader reader =  new InputStreamReader(new FileInputStream(filename),"utf-8");
-            int ch = 0;
-            StringBuffer sb = new StringBuffer();
+            Reader reader =  new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8);
+            int ch;
+            StringBuilder sb = new StringBuilder();
             while ((ch = reader.read()) != -1) {
                 sb.append((char) ch);
             }
