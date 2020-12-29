@@ -3,6 +3,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class FileIOBasics {
+
     public void writeFile(String filename, String content) {
         try {
             FileWriter fw = new FileWriter(filename);
@@ -13,6 +14,7 @@ public class FileIOBasics {
             System.out.println("Failed to Write content into " + filename);
         }
     }
+
     public String readJsonFile(String filename) {
         try {
             FileReader fr = new FileReader(filename);
@@ -31,5 +33,6 @@ public class FileIOBasics {
             return "";
         }
     }
+
 
 }
