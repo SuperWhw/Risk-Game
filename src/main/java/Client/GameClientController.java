@@ -152,8 +152,12 @@ public class GameClientController {
     }
 
     public static void main(String[] args) {
-        // 32861 36376tg150.zicp.vip
+
+
         var control = new GameClientController(6666, "localhost");
+
+        //var control = new GameClientController(32861, "127.0.0.1", "36376tg150.zicp.vip");
+
         control.setName();
         control.InitializeMap();
 

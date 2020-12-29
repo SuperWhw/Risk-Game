@@ -1,18 +1,33 @@
 package Utilities;
+import Server.*;
+import java.io.*;
+import java.util.Calendar;
 
+import Client.*;
+import Shared.*;
+import java.sql.*;
 public class test {
-    public static void main(String[] args) {
-        for(int i = 30; i <= 40; ++i) {
-            System.out.println("\033[" + i + ";1m" + "hello world" + "\033[0m");
-        }
-        for(int i = 90; i <= 98; ++i) {
-            System.out.println("\033[" + i + ";1m" + "hello world" + "\033[0m");
-        }
-        for(int i = 30; i <= 40; ++i) {
-            System.out.println("\033[" + i + ";4m" + "hello world" + "\033[0m");
-        }
-        for(int i = 90; i <= 98; ++i) {
-            System.out.println("\033[" + i + ";4m" + "hello world" + "\033[0m");
+    public static void main(String[] args) throws SQLException{
+        // JDBC连接的URL, 不同数据库有不同的格式:
+        String JDBC_URL = "jdbc:mysql://localhost:3306/learnjdbc?useSSL=false&characterEncoding=utf8";
+        String JDBC_USER = "root";
+        String JDBC_PASSWORD = "Tt123456";
+        // 获取连接:
+        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD)) {
+            try (PreparedStatement ps = conn.prepareStatement("SELECT id, grade, name, gender FROM students WHERE gender=? AND grade=?")) {
+                ps.setObject(1, "M"); // 注意：索引从1开始
+                ps.setObject(2, 3);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        long id = rs.getLong("id");
+                        long grade = rs.getLong("grade");
+                        String name = rs.getString("name");
+                        String gender = rs.getString("gender");
+                        System.out.println("id: " + id + " grade: " +grade + " name: " + name
+                                + " gender: " + gender);
+                    }
+                }
+            }
         }
         /* test GameJsonUtils
         ArrayList<String> players = new ArrayList<>();

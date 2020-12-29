@@ -123,8 +123,5 @@ public class GameServerController {
             control.OneRound();
         }
         control.sendMap();
-
     }
-
-
 }
