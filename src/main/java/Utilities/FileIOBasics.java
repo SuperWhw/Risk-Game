@@ -17,16 +17,10 @@ public class FileIOBasics {
 
     public String readJsonFile(String filename) {
         try {
-            FileReader fr = new FileReader(filename);
-            Reader reader =  new InputStreamReader(new FileInputStream(filename), StandardCharsets.UTF_8);
-            int ch;
-            StringBuilder sb = new StringBuilder();
-            while ((ch = reader.read()) != -1) {
-                sb.append((char) ch);
-            }
-            fr.close();
-            reader.close();
-            return sb.toString();
+            InputStream is = this.getClass().getResourceAsStream(filename);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            return br.readLine();
         }
         catch(IOException e) {
             System.out.println("Failed to read file " + filename);

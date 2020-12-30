@@ -55,8 +55,7 @@ public class GameServerController {
         System.out.println("Message received " + players);
 
         // read and load map.json
-        String fileName = this.getClass().getClassLoader().getResource("map.json").getPath();
-        var MapStr = fileIO.readJsonFile(fileName);
+        var MapStr = fileIO.readJsonFile("/map.json");
         gameMap = jsonUtils.readJsonToGameMap(MapStr, players);
 
     }

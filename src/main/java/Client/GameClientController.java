@@ -152,7 +152,7 @@ public class GameClientController {
     }
 
     public static void main(String[] args) {
-        // 32861 36376tg150.zicp.vip
+        // 20.51.208.39
         var control = new GameClientController(6666, "localhost");
         control.setName();
         control.InitializeMap();
