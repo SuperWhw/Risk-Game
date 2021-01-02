@@ -8,7 +8,11 @@ import Utilities.ColorPrint;
 public class GameClientViewer {
     public void printMap(GameMap map, Player player, String style) {
         for(var p: map.getPlayerMap().values()) {
-            if(p.getTerritories().isEmpty()) continue;
+            if(p.getTerritories().isEmpty()) {
+                System.out.printf("%s player: (Lose)\n", p.getName());
+                System.out.print("-------------\n\n");
+                continue;
+            }
             if(p.getName().equals(player.getName())) {
                 System.out.printf("%s player: (You)\n", player.getName());
             }
