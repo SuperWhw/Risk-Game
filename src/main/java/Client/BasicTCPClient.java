@@ -44,14 +44,13 @@ public class BasicTCPClient {
     }
 
     public String receiveMessage() {
-        while(getReady() == false) {
-            try {
-                Thread.sleep(100);
+        //System.out.println("waiting for answer");
+        while (true) {
+            if (getReady()) {
+                break;
             }
-            catch(InterruptedException e) {
-                System.out.println("thread interrupted");
-                e.printStackTrace();
-                this.end();
+            if (!thread.isRunning()) {
+                return null;
             }
         }
         setReady(false);
@@ -92,7 +91,7 @@ public class BasicTCPClient {
     class HeartBeaterReceiver implements Runnable {
         private final long checkDelay = 10;
         private long lastReceiveTime;
-        private final long receiveTimeDelay = 20000;
+        private final long receiveTimeDelay = 60000;
 
         public HeartBeaterReceiver() {
             super();

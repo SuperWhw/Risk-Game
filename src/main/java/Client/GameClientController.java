@@ -89,6 +89,10 @@ public class GameClientController {
 
     int OneRound(int round) {
         String MapStr = client.receiveMessage();
+        if(MapStr == null) {
+            //System.out.println("Server disconnected, game end");
+            return 1;
+        }
         jsonUtils.updateMap(MapStr, gameMap);
         own = gameMap.getPlayerByName(own.getName());
 
@@ -167,13 +171,14 @@ public class GameClientController {
 
     public static void main(String[] args) {
 
-        var control = new GameClientController(6666, "localhost");
+        var control = new GameClientController(6666, "riskgame.top");
 
         control.setName();
         control.InitializeMap();
 
         int round = 1, status = 0;
         while(control.client.isRunning() && status != 1) {
+            //System.out.println("isRunning " + control.client.isRunning() + " status " + status);
             status = control.OneRound(round++);
         }
         control.client.end();
