@@ -92,7 +92,7 @@ public class BasicTCPClient {
     class HeartBeaterReceiver implements Runnable {
         private final long checkDelay = 10;
         private long lastReceiveTime;
-        private final long receiveTimeDelay = 3000;
+        private final long receiveTimeDelay = 20000;
 
         public HeartBeaterReceiver() {
             super();

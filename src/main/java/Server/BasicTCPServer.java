@@ -14,7 +14,7 @@ public class BasicTCPServer {
     private ArrayList<tcpIOHandlerThread> threads;
     private String[] readBuffer;
     private boolean running;
-    private final long receiveTimeDelay = 3000;
+    private final long receiveTimeDelay = 20000;
 
 
     public BasicTCPServer(int PORT, int playerNum) throws IOException {
@@ -50,7 +50,8 @@ public class BasicTCPServer {
                     thread.sendMessage(input);
             }
             for (var thread : this.threads) {
-                thread.join();
+                if(thread.isRunning())
+                    thread.join();
             }
             //System.out.println("Send message done ");
         }
@@ -63,7 +64,7 @@ public class BasicTCPServer {
     }
 
     public ArrayList<String> receiveMessage() {
-        //System.out.println("checkhere");
+        //System.out.println("receiving");
         while(!isReadyForRead()) {
             try {
                 Thread.sleep(100);

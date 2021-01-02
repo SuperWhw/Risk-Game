@@ -153,7 +153,7 @@ public class GameClientController {
 
     public static void main(String[] args) {
 
-        var control = new GameClientController(6666, "localhost");
+        var control = new GameClientController(6666, "riskgame.top");
 
         control.setName();
         control.InitializeMap();
