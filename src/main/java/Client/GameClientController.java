@@ -153,16 +153,13 @@ public class GameClientController {
 
     public static void main(String[] args) {
 
-
         var control = new GameClientController(6666, "localhost");
-
-        //var control = new GameClientController(32861, "127.0.0.1", "36376tg150.zicp.vip");
 
         control.setName();
         control.InitializeMap();
 
         int round = 1, status = 0;
-        while(status != 1) {
+        while(control.client.isRunning() && status != 1) {
             status = control.OneRound(round++);
         }
         control.client.end();
