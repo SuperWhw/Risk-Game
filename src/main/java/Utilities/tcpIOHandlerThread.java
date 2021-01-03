@@ -36,7 +36,7 @@ public class tcpIOHandlerThread extends Thread {
             writer.flush();
         }
         catch(SocketException e) {
-            System.out.println("Client/Server disconnected");
+            System.out.println("Client disconnected");
             this.end();
         }
     }

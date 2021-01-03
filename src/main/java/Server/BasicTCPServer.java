@@ -14,7 +14,7 @@ public class BasicTCPServer {
     private ArrayList<tcpIOHandlerThread> threads;
     private String[] readBuffer;
     private boolean running;
-    private final long receiveTimeDelay = 60000;
+    private final long receiveTimeDelay = 20000;
 
 
     public BasicTCPServer(int PORT, int playerNum) throws IOException {
