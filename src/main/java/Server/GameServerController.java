@@ -36,6 +36,9 @@ public class GameServerController {
     }
 
     public boolean isGameDone(){
+        if(server.getRunningNum() <= 1) {
+            return true;
+        }
         for(var player : gameMap.getPlayerMap().values()) {
             if(player.getTerritories().size() == gameMap.getTerritoryMap().size()) {
                 var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
@@ -78,6 +81,9 @@ public class GameServerController {
         }
     }
     void sendMap() {
+        if(server.getRunningNum() <= 1) {
+            return;
+        }
         var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
         server.sendMessage(gameMapStr);
     }
@@ -113,6 +119,10 @@ public class GameServerController {
         handler.addOne(gameMap);
     }
 
+    public void end() {
+        server.end();
+    }
+
     public static void main(String[] args) throws IOException {
         var control = new GameServerController(6666,3);
         control.InitializeMap();
@@ -122,8 +132,6 @@ public class GameServerController {
             control.OneRound();
         }
         control.sendMap();
-
+        control.end();
     }
-
-
 }

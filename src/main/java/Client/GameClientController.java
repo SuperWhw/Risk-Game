@@ -120,8 +120,6 @@ public class GameClientController {
                 System.out.printf("%s %d units from %s to %s\n", order.getOrderType(), order.getUnits(), order.getFromT().getName(), order.getToT().getName());
             }
             System.out.println();
-
-
         }
         else if(status == -1){
             System.out.println("You are watching the game: ");
@@ -139,6 +137,10 @@ public class GameClientController {
         return status;
     }
 
+    // get status:
+    // status = 1: Has winner(you or other player), game finish
+    // status = -1: You lose
+    // status = 0: Game continue
     int getStatus(){
         if(own.getTerritories().size() == gameMap.getTerritoryMap().size()) {
             System.out.println("Congrats, you win!");
@@ -146,19 +148,32 @@ public class GameClientController {
         }
         else if (own.getTerritories().size() == 0) {
             System.out.print("Sorry, you lose! ");
+            Player winner = hasWinner();
+            if(winner != null) {
+                System.out.printf("The winner is %s\n",winner.getName());
+                return 1;
+            }
             return -1;
         }
         return 0;
     }
 
+    Player hasWinner() {
+        for(var p: gameMap.getPlayerMap().values()) {
+            if(p.getTerritories().size() == gameMap.getTerritoryMap().size()) return p;
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        // 20.51.208.39
+
         var control = new GameClientController(6666, "localhost");
+
         control.setName();
         control.InitializeMap();
 
         int round = 1, status = 0;
-        while(status != 1) {
+        while(control.client.isRunning() && status != 1) {
             status = control.OneRound(round++);
         }
         control.client.end();
