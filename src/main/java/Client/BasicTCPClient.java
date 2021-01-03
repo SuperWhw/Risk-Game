@@ -1,6 +1,5 @@
 package Client;
 
-import Server.BasicTCPServer;
 import Utilities.tcpIOHandlerThread;
 import java.lang.*;
 import java.io.*;
