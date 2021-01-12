@@ -62,12 +62,16 @@ public class GameServerController {
         gameMap = jsonUtils.readJsonToGameMap(MapStr, players);
 
     }
+
     void setInitUnits() {
         var gameMapStr = jsonUtils.writeMapToJson(gameMap, null);
         server.sendMessage(gameMapStr);
         ArrayList<String> playerWithUnits = server.receiveMessage();
         System.out.println("units received " + playerWithUnits);
         jsonUtils.readUnits(playerWithUnits, gameMap);
+
+        /* now do not support default setting units
+
         for(var player : gameMap.getPlayerMap().values()) {
             boolean isNull = true;
             for(var territory : player.getTerritories()) {
@@ -75,11 +79,13 @@ public class GameServerController {
             }
             if(isNull) {
                 for(var territory : player.getTerritories()) {
-                    territory.setUnits(gameMap.getInitUnits()/3);
+                    territory.setUnitsMap(gameMap.getInitUnits()/3);
                 }
             }
         }
+        */
     }
+
     void sendMap() {
         if(server.getRunningNum() <= 1) {
             return;
@@ -87,6 +93,7 @@ public class GameServerController {
         var gameMapStr = jsonUtils.writeMapToJson(gameMap,null);
         server.sendMessage(gameMapStr);
     }
+
     void OneRound() {
         for(var player : gameMap.getPlayerMap().values()) {
             viewer.printMap(gameMap, player, "order");
@@ -101,22 +108,26 @@ public class GameServerController {
         for(var order: orders) {
             System.out.println(order);
         }
-        var orderList = new ArrayList<OrderBasic>();
+
+        //TODO: Now the orderlist type changed: OrderBasic -> Order
+        var orderList = new ArrayList<Order>();
         for(var str : orders) {
             var orderBasic = jsonUtils.readJsonToOrderList(str, gameMap);
             if(orderBasic != null)
                 orderList.addAll(orderBasic);
         }
 
-        // print order
+        /* TODO: support print update order type
+
         System.out.println("order is: ");
         for(var order: orderList) {
             System.out.printf("%s %d units from %s to %s\n",order.getOrderType(),order.getUnits(),order.getFromT().getName(),order.getToT().getName());
         }
         System.out.println();
+        */
 
         handler.execute(orderList);
-        handler.addOne(gameMap);
+        handler.refreshRoundEnd(gameMap);
     }
 
     public void end() {

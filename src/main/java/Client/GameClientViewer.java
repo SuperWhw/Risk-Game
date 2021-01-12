@@ -47,9 +47,9 @@ public class GameClientViewer {
                     color = ColorPrint.Color.SKYBLUE;
                     System.out.print("|" +cp.setColor("M",color) + "|");
                 }
-                System.out.print(cp.setColor(getTerritoryOrderName(t),color) + "[" + t.getUnits() + "] (next to:");
+                System.out.print(cp.setColor(getTerritoryOrderName(t),color) + "[" + t.getUnitsMap() + "] (next to:");
                 for (var tn : t.getNeighbors()) {
-                    System.out.printf(" %s[%d]", getTerritoryOrderName(tn), tn.getUnits());
+                    System.out.printf(" %s[%d]", getTerritoryOrderName(tn), tn.getTotalUnits());
                 }
                 System.out.print(")\n");
             }

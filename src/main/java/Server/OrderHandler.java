@@ -8,78 +8,96 @@ import java.util.Random;
 
 public class OrderHandler {
 
-    public void addOne(GameMap map) {
+    public void refreshRoundEnd(GameMap map) {
         for(var territory : map.getTerritoryMap().values()) {
-            territory.setUnits(territory.getUnits() + 1);
+            territory.setUnits(0, territory.getUnits(0) + 1);
+        }
+        for(var player: map.getPlayerMap().values()) {
+            player.refreshFoodTotal();
+            player.refreshTechTotal();
         }
     }
 
-    public void execute(ArrayList<OrderBasic> orderList) {
+    public void execute(ArrayList<Order> orderList) {
 
-        ArrayList<MoveOrder> moveList = new ArrayList<>();
         ArrayList<AttackOrder> attackList = new ArrayList<>();
         CheckHelper checker = new CheckHelper();
+        ArrayList<Player> upgradeTechPlayerList = new ArrayList<>();
 
-        // group orders
+        // execute move, upgrade units and first step of attack
         for(var order: orderList) {
-            if(!checker.checkOrderBasic(order)) continue;
+            if(!checker.checkOrder(order)) continue;
 
-            if(order.getOrderType().equals("move")) {
-                moveList.add((MoveOrder) order);
-            }
-            else if(order.getOrderType().equals("attack")) {
-                // Attackers should leave out of their owner Territory first.
-                moveList.add(new MoveOrder(order.getPlayer(), "move", order.getFromT(), null, order.getUnits()));
-                attackList.add((AttackOrder) order);
+            switch (order.getOrderType()) {
+                case "move": {
+                    MoveOrder moveOrder = (MoveOrder) order;
+                    moveOrder.execute();
+                    break;
+                }
+                case "upgrade":
+                    UpgradeOrder upgradeOrder = (UpgradeOrder) order;
+                    if (upgradeOrder.getTerritory() != null) {
+                        upgradeOrder.execute();
+                    } else {
+                        upgradeTechPlayerList.add(order.getPlayer());
+                    }
+                    break;
+                case "attack": {
+                    // Attackers should leave out of their owner Territory first.
+                    AttackOrder attackOrder = (AttackOrder) order;
+                    MoveOrder moveOrder = new MoveOrder(order.getPlayer(), "move", attackOrder.getFromT(), null, attackOrder.getLevel(), attackOrder.getUnits());
+                    moveOrder.execute();
+                    attackList.add(attackOrder);
+                    break;
+                }
             }
         }
 
-        attackList = mergeAttack(attackList);
+        // execute attack
+        executeMergeAttack(attackList);
 
-        // execute move and 1st step of attack
-        for(var order: moveList) order.execute();
-
-        //execute attack
-        for(var order: attackList) order.execute();
-
+        // execute tech level upgrade
+        for(var p: upgradeTechPlayerList) {
+            UpgradeOrder upgradeOrder = new UpgradeOrder(p,"upgrade");
+            upgradeOrder.execute();
+        }
     }
 
-    private ArrayList<AttackOrder> mergeAttack(ArrayList<AttackOrder> attackList) {
-        ArrayList<AttackOrder> res = new ArrayList<>();
+    private void executeMergeAttack(ArrayList<AttackOrder> attackList) {
 
         // merge force if attackers attack same territory who are from same player
-        HashMap<Territory, HashMap<Player, Integer>> attHandler = mergeAttackForce(attackList);
+        HashMap<Territory, HashMap<Player, HashMap<Integer, Integer>>> attHandler = mergeAttackForce(attackList);
 
         for(var t: attHandler.keySet()) {
             // get random player list
             Player[] playerArray = getRandomPlayerArray(attHandler.get(t).keySet().toArray(new Player[0]));
 
             for(var p: playerArray) {
-                // we don't need fromT, so the parameter is dummy
-                res.add(new AttackOrder(p, "attack", t, t, attHandler.get(t).get(p)));
+                // we don't need fromT, level, units; so the parameters are dummy
+                AttackOrder attackOrder = new AttackOrder(p, "attack", null, t, -1, -1);
+                attackOrder.setAttUnits(attHandler.get(t).get(p));
+                attackOrder.execute();
             }
         }
-        return res;
     }
 
-    private HashMap<Territory, HashMap<Player, Integer>> mergeAttackForce(ArrayList<AttackOrder> attackList) {
-        HashMap<Territory, HashMap<Player, Integer>> attHandler = new HashMap<>();
+    private HashMap<Territory, HashMap<Player, HashMap<Integer, Integer>>> mergeAttackForce(ArrayList<AttackOrder> attackList) {
+        HashMap<Territory, HashMap<Player, HashMap<Integer, Integer>>> attHandler = new HashMap<>();
         for(var att: attackList) {
             Territory toT = att.getToT();
-            if(attHandler.containsKey(toT)) {
-                Player p = att.getPlayer();
-                if(attHandler.get(toT).containsKey(p)) {
-                    int v = attHandler.get(toT).get(p);
-                    attHandler.get(toT).replace(p, v+att.getUnits());
-                }
-                else {
-                    attHandler.get(toT).put(p, att.getUnits());
-                }
+            if(!attHandler.containsKey(toT)) {
+                attHandler.put(toT, new HashMap<>());
             }
-            else {
-                attHandler.put(toT, new HashMap<Player, Integer>());
-                attHandler.get(toT).put(att.getPlayer(), att.getUnits());
+            Player p = att.getPlayer();
+            if(!attHandler.get(toT).containsKey(p)) {
+                attHandler.get(toT).put(att.getPlayer(), new HashMap<>(){{
+                    for(int level = 0; level <= 6; ++level) {
+                        put(level,0);
+                    }
+                }});
             }
+            int level = att.getLevel(), units = att.getUnits(), originalUnits = attHandler.get(toT).get(p).get(level);
+            attHandler.get(toT).get(p).put(level, originalUnits + units);
         }
         return attHandler;
     }

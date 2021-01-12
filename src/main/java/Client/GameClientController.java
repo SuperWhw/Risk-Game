@@ -69,7 +69,7 @@ public class GameClientController {
         int index = 0;
         for(var t: territoryList) {
             int unit = Integer.parseInt(strArray[index++]);
-            Territory newt = new Territory(t.getName(),t.getAliasName(),unit,own);
+            Territory newt = new Territory(t.getName(),t.getAliasName(),unit,t.getFoodResource(),t.getTechResource(),t.getSize(),own);
             own.addTerritory(newt);
         }
 
@@ -94,7 +94,7 @@ public class GameClientController {
 
         System.out.printf("\n>>>>>>>>>>>>>>>>>>>>> Round %d <<<<<<<<<<<<<<<<<<<<<\n\n",round);
         int status = getStatus();
-        ArrayList<OrderBasic> orderList = new ArrayList<>();
+        ArrayList<Order> orderList = new ArrayList<>();
         if(status == 0) {
             String in;
             while (true) {
@@ -103,7 +103,7 @@ public class GameClientController {
                     System.out.println("Please input order: ");
                     in = scanner.nextLine();
                     if (in.equals("commit")) break;
-                    OrderBasic order = gsu.strToOrder(gameMap, in, own);
+                    Order order = gsu.strToOrder(gameMap, in, own);
                     handler.execute(order);
                     orderList.add(order);
                 } catch (NumberFormatException e) {
@@ -114,11 +114,13 @@ public class GameClientController {
                 System.out.println();
             }
 
-            // print order
+            /* print order TODO: support upgrade order
+
             System.out.println("You order is: ");
             for (var order : orderList) {
                 System.out.printf("%s %d units from %s to %s\n", order.getOrderType(), order.getUnits(), order.getFromT().getName(), order.getToT().getName());
             }
+            */
             System.out.println();
         }
         else if(status == -1){
@@ -129,7 +131,7 @@ public class GameClientController {
             return status;
         }
 
-        // send order list
+        // send order list TODO: support Order Array
         String orderStr = jsonUtils.writeOrderListToJson(orderList);
         client.sendMessage(orderStr);
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GameMap {
-    private HashMap<String, Territory> territoryMap;
-    private HashMap<String, Player> playerMap;
+    private final HashMap<String, Territory> territoryMap;
+    private final HashMap<String, Player> playerMap;
     private int initUnits;
 
     public GameMap() {
